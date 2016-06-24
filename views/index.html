@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+
+<!-- http://localhost:2048/GET?documents=ied&index_19=PY157118101W00B44DS&index_inter=&title=UNIT1+Core+Cooling+Monitoring+System+Cabinet+Software+Diagram%28Train+B%29&rev=A&check_by=%E7%8E%8B%E5%BA%86%E6%98%8E&review_by=%E8%A4%9A%E7%91%9E&button= -->
+  <form action="GET">
+
+    <label for="documents">选择文件类型</label>
+    <select id="document_selection" name="documents">
+      <option value="ied">IED文件</option> 
+      <option value="fax">传真</option> 
+      <option value="iics">IICS</option> 
+    </select>
+    <br>
+    
+
+    <label for="index_19">19位编码</label>
+    <input type="text" name="index_19">
+
+    <label for="index_inter">内部编码</label>
+    <input type="text" name="index_short">
+
+    <label for="title">文件名称</label>
+    <input type="text" name="title">
+
+    <label for="rev">版本</label>
+    <input type="text" name="rev">
+
+    <label for="draft">设计人</label>
+    <input type="text" name="draft">
+
+    <label for="check">互查人</label>
+    <input type="text" name="check">
+
+    <label for="review">审核人</label>
+    <input type="text" name="review">
+
+    <label for="approve">批准人</label>
+    <input type="text" name="approve">
+
+    <label for="pages">总页数</label>
+    <input type="text" name="pages">
+    <br>
+
+    <button name="button">生成</button>
+  </form>
+
+</body>
+</html>
