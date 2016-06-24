@@ -114,6 +114,8 @@ function prepareDownLoad ( files ) {
   return fileObjs;
 }
 
+// 模板有两类，docx格式或xlsx格式
+// 需要些两个类型的处理模板，实现模板的填写和最终文件生成
 function checkExtension ( file ) {
   var fileTypes = {
     '.xlsx' 
