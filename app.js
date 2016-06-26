@@ -4,7 +4,7 @@ const fs = require('fs'),
       engines = require('consolidate'),
       morgan = require('morgan'),
       async = require('async'),
-      ymd = require('./yyyymmdd'),
+      formatedDT = require('./format-dt.js'),
       path = require('path'),
       zip = require('express-zip'),
       XLSX = require('xlsx-template'),
@@ -37,9 +37,9 @@ app.get('/GET', function(req, res) {
   dataSet['i_s'] = req.query.index_short;
   dataSet['pages'] = req.query.pages;
   
-  Date.prototype.ymd = ymd;
+  Date.prototype.formatedDate = formatedDT.formatedDate;
   var today = new Date();
-  dataSet['date'] = today.ymd('-');
+  dataSet['date'] = today.formatedDate('-');
 
 
   (function setIndex19 () {
@@ -116,10 +116,10 @@ function prepareDownLoad ( files ) {
 
 // 模板有两类，docx格式或xlsx格式
 // 需要些两个类型的处理模板，实现模板的填写和最终文件生成
-function checkExtension ( file ) {
-  var fileTypes = {
-    '.xlsx' 
-  };
-  var extName = path.extname(file);
-  return fileType = 
-}
+// function checkExtension ( file ) {
+//   var fileTypes = {
+//     '.xlsx' 
+//   };
+//   var extName = path.extname(file);
+//   return fileType = 
+// }

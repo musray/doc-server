@@ -6,16 +6,31 @@
 </head>
 <body>
 
-<!-- http://localhost:2048/GET?documents=ied&index_19=PY157118101W00B44DS&index_inter=&title=UNIT1+Core+Cooling+Monitoring+System+Cabinet+Software+Diagram%28Train+B%29&rev=A&check_by=%E7%8E%8B%E5%BA%86%E6%98%8E&review_by=%E8%A4%9A%E7%91%9E&button= -->
+  <h1>文档服务 <span id="h1-version">(rev 0.1)</span></h1>
+
   <form action="GET">
 
-    <label for="documents">选择文件类型</label>
-    <select id="document_selection" name="documents">
-      <option value="ied">IED文件</option> 
-      <option value="fax">传真</option> 
-      <option value="iics">IICS</option> 
-    </select>
-    <br>
+    <div class="selection-group">
+      <label for="documents">选择项目</label>
+      <select id="document_selection" name="documents">
+        <option value="ied">CPR1000</option> 
+        <option value="fax">阳江56</option> 
+        <option value="fax">红沿河56</option> 
+        <option value="iics">田湾56</option> 
+        <option value="iics">防城港34</option> 
+      </select>
+      <br>
+    </div>
+
+    <div id="selection-group">
+      <label for="documents">选择文件类型</label>
+      <select id="document_selection" name="documents">
+        <option value="ied">IED文件</option> 
+        <option value="ied">CIN</option> 
+        <option value="iics">IICS</option> 
+      </select>
+      <br>
+    </div>
     
 
     <label for="index_19">19位编码</label>
