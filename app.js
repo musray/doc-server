@@ -8,7 +8,8 @@ const fs = require('fs'),
       path = require('path'),
       zip = require('express-zip'),
       XLSX = require('xlsx-template'),
-      Docxtemplater = require('docxtemplater');
+      genDocList = require('gen-doc-list.js'),
+      docxProcessor = require('./docx-processor.js');
 
 // set up express application
 const app = express();
@@ -23,10 +24,16 @@ app.get('/', function(req, res) {
 });
 
 // get request for /GET
-// main biz logic
+// main bussness logic
 app.get('/GET', function(req, res) {
 
-  var docsToGen = ['ied_cover', 'check_list']
+  // create formated date and time string
+  // can be used at any place where 
+  // need current date or time
+  Date.prototype.formatedDate = formatedDT.formatedDate;
+  var today = new Date();
+
+  // DATASET will be used in docx-templating
   var dataSet = {};
   dataSet['r'] = req.query.rev;
   dataSet['d_b'] = req.query.draft;
@@ -35,58 +42,68 @@ app.get('/GET', function(req, res) {
   dataSet['a_b'] = req.query.approve; 
   dataSet['t'] = req.query.title;
   dataSet['i_s'] = req.query.index_short;
+  dataSet['i_19'] = req.query.index_19;
   dataSet['pages'] = req.query.pages;
-  
-  Date.prototype.formatedDate = formatedDT.formatedDate;
-  var today = new Date();
   dataSet['date'] = today.formatedDate('-');
+  // splite index_19 into a list of each digit.
+  var index_19 = req.query.index_19;
+  for ( let m = 0; m < req.query.index_19.length; m++ ) {
+    let no = 'i' + m;
+    dataSet[no] = index_19[m]
+  }
 
-
-  (function setIndex19 () {
-    var index_19 = req.query.index_19;
-    for ( var m = 0; m < req.query.index_19.length; m++ ) {
-      var no = 'i' + m;
-      dataSet[no] = index_19[m]
-    }
-  }())
+  var documentCategory = req.query.documents;
+  var projectPath = '/' + req.query.projects;
+  // A list of templates will be processed
+  // in a form of [ 'sw_check_list.xlsx', 'ied_cover.docx', 'check_record.xlsx' ]
+  var docsToGen = genDocList();
   
-  // might be cpr1000, tw56, yj56, fcg34 ...
-  var docsToGen = [ 'sw_check_list', 'ied_cover' ];
-  // var projectPath = '/' + req.query.project;
-  var projectPath = '/cpr1000';
-  var fileType = {
-    ied_cover : '/' + 'ied_cover.docx',
-    sw_check_list : '/' + 'sw_check_list.docx',
-    check_record : '/' + 'check_record.xlsx'
-  };
-
-
+  // Use "generatedFiles" to collect the created docs
+  // Then used in "res.zip" method to gathering
+  // docs to download.
   var generatedFiles = [];
   async.eachSeries(docsToGen, function(doc, callback) {
-    var filePath = __dirname 
-                + '/templates' 
-                + projectPath 
-                + fileType[doc];
+    // TODO !To be deleted!.
+    // var filePath = __dirname 
+    //             + '/templates' 
+    //             + projectPath 
+    //             + doc;
+    var filePath = path.join(__dirname, 'templates', projectPath, doc);
 
     var content = fs
       .readFileSync(filePath, 'binary');
 
-    var output = new Docxtemplater(content);
-    output.setData(dataSet);
-    output.render();
-    var buf = output.getZip()
-                   .generate({ type: 'nodebuffer' });
-
-    var outputFile = __dirname + '/output/' 
-                   + doc + '_' + dataSet.t 
-                   + path.extname(fileType[doc]);
-
-    fs.writeFileSync(outputFile, buf);
-    console.log(path.basename(outputFile) + 'is generated!');
-    generatedFiles.push(outputFile);
+    // TODO
+    // wrap the templating process
+    // into a external module
+    // might be two functions for xlsx and docx, respectively.
+    var extensionName = path.extname;
+    if ( extensionName == '.docx' ) {
+      // TODO
+    } else if (extensionName == '.xlsx') {
+      // TODO
+    }
+    // if ( extensionName == '.docx' ) {
+    //   var output = new Docxtemplater(content);
+    //   output.setData(dataSet);
+    //   output.render();
+    //   var buf = output.getZip()
+    //                  .generate({ type: 'nodebuffer' });
+    //
+    //   var outputFile = __dirname + '/output/' 
+    //                  + doc + '_' + dataSet.t 
+    //                  + path.extname(fileType[doc]);
+    //
+    //   fs.writeFileSync(outputFile, buf);
+    //   console.log(path.basename(outputFile) + 'is generated!');
+    //   generatedFiles.push(outputFile);
+    // }
     callback();
     }, function (err) {
-        if ( err ) console.log(err + ' + err');
+        if ( err ) { console.log(err + ' + err') 
+        } else {
+        // get an list of objects
+        // which are desired by res.zip method.
         var downLoadFile = prepareDownLoad(generatedFiles);
         res.zip(downLoadFile, function(err) {
           if (err) {
@@ -94,8 +111,8 @@ app.get('/GET', function(req, res) {
           } else {
             console.log('files have been sent.');
           }
-        });
-    }
+        })}
+    };
   );
 });
 
@@ -113,13 +130,3 @@ function prepareDownLoad ( files ) {
   });
   return fileObjs;
 }
-
-// 模板有两类，docx格式或xlsx格式
-// 需要些两个类型的处理模板，实现模板的填写和最终文件生成
-// function checkExtension ( file ) {
-//   var fileTypes = {
-//     '.xlsx' 
-//   };
-//   var extName = path.extname(file);
-//   return fileType = 
-// }
