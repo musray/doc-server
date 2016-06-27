@@ -69,6 +69,12 @@ app.get('/GET', function(req, res) {
     //             + projectPath 
     //             + doc;
     var filePath = path.join(__dirname, 'templates', projectPath, doc);
+    var extensionName = path.extname(filePath);
+    if ( extensionName == '.docx' ) {
+      // TODO
+    } else if (extensionName == '.xlsx') {
+      // TODO
+    }
 
     var content = fs
       .readFileSync(filePath, 'binary');
@@ -76,13 +82,8 @@ app.get('/GET', function(req, res) {
     // TODO
     // wrap the templating process
     // into a external module
-    // might be two functions for xlsx and docx, respectively.
-    var extensionName = path.extname;
-    if ( extensionName == '.docx' ) {
-      // TODO
-    } else if (extensionName == '.xlsx') {
-      // TODO
-    }
+    // might be two functions each for
+    // xlsx and docx, respectively.
     // if ( extensionName == '.docx' ) {
     //   var output = new Docxtemplater(content);
     //   output.setData(dataSet);
