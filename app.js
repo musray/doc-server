@@ -4,12 +4,12 @@ const fs = require('fs'),
       engines = require('consolidate'),
       morgan = require('morgan'),
       async = require('async'),
-      formatedDT = require('./format-dt.js'),
+      formatedDT = require('./libs/format-dt.js'),
       path = require('path'),
       zip = require('express-zip'),
       XLSX = require('xlsx-template'),
-      genDocList = require('gen-doc-list.js'),
-      docxProcessor = require('./docx-processor.js');
+      genDocList = require('./libs/gen-doc-list.js'),
+      docxProcessor = require('./libs/docx-processor.js');
 
 // set up express application
 const app = express();
