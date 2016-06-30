@@ -9,7 +9,8 @@ const fs = require('fs'),
       zip = require('express-zip'),
       XLSX = require('xlsx-template'),
       genDocList = require('./libs/gen-doc-list.js'),
-      docxProcessor = require('./libs/docx-processor.js');
+      xlsxProcessor = require('./libs/xlsx-processor'),
+      docxProcessor = require('./libs/docx-processor');
 
 // set up express application
 const app = express();
@@ -51,6 +52,11 @@ app.get('/GET', function(req, res) {
     let no = 'i' + m;
     dataSet[no] = index_19[m]
   }
+  // Applicable to CPR1000
+  // TODO for other projetcs
+  dataSet['observation'] = 
+    req.query.rev.toLowerCase() == 'a' ? 'First issue' 
+                                       : 'Revised according to design progress';
 
   // documentCategory is direvied from webpage
   // it might equals to 'ied', 'cin', 'iics', etc.
@@ -63,53 +69,35 @@ app.get('/GET', function(req, res) {
   // in a form of [ 'sw_check_list.xlsx', 'ied_cover.docx', 'check_record.xlsx' ]
   // var docsToGen = genDocList( documentCategory );
   
-  var docsToGen = [ 'ied_cover_template.docx', 'sw_check_list_template.docx' ]
+  var docsToGen = [ 'ied_cover.docx',
+                    'sw_check_list.docx',
+                    'cin_cover.xlsx' ]
   
   // Use "generatedFiles" to collect the name of created docs
   // Then used in "res.zip" method to gathering
   // docs to download.
   var generatedFiles = [];
   async.eachSeries(docsToGen, function(doc, callback) {
-    // TODO !To be deleted!.
-    // var filePath = __dirname 
-    //             + '/templates' 
-    //             + projectPath 
-    //             + doc;
     var templatePath = path.join(__dirname, 'templates', projectPath, doc);
     var templateExt = path.extname(templatePath);
     var generatedFilePath = path.join(__dirname, 'output', 
-                                      (doc + '_' + dataSet.t) );
+                                      (dataSet.t + '_' + doc) );
     if ( templateExt == '.docx' ) {
-      var docBuf = docxProcessor(templatePath, dataSet);
+      // If it encounters a docx template
+      var docBuf = docxProcessor( templatePath, dataSet );
       fs.writeFileSync( generatedFilePath, docBuf );
-    } 
-    // else if ( templateExt == '.xlsx') {
-    //   // TODO
-    // }
+      generatedFiles.push( generatedFilePath );
+    } else if ( templateExt == '.xlsx') {
+      // If it encounters a xlsx template
+      var docBuf = xlsxProcessor();
+      console.log('***** DEBUGE messasge ' + docBuf + ' *****');
+      // TODO ... then write the docBuf into file system
+    }
 
-    // TODO
-    // wrap the templating process
-    // into a external module
-    // might be two functions each for
-    // xlsx and docx, respectively.
-    // if ( extensionName == '.docx' ) {
-    //   var output = new Docxtemplater(content);
-    //   output.setData(dataSet);
-    //   output.render();
-    //   var buf = output.getZip()
-    //                  .generate({ type: 'nodebuffer' });
-    //
-    //   var outputFile = __dirname + '/output/' 
-    //                  + doc + '_' + dataSet.t 
-    //                  + path.extname(fileType[doc]);
-    //
-    //   fs.writeFileSync(outputFile, buf);
-    //   console.log(path.basename(outputFile) + 'is generated!');
-    //   generatedFiles.push(outputFile);
-    // }
     callback();
     }, function (err) {
-        if ( err ) { console.log(err + ' + err') 
+        if ( err ) { 
+          console.log(err + ' + err') 
         } else {
         // get an list of objects
         // which are desired by res.zip method.
@@ -129,6 +117,15 @@ app.get('/GET', function(req, res) {
 app.listen(2048);
 console.log('Listening on localhost 2048');
 
+/* 
+ * This function is used to generate 
+ * the data structure object
+ * required by res.zip function
+ *
+ * 1. argv
+ * files must be an array of files' FULL pathes
+ *
+ */
 function prepareDownLoad ( files ) {
   var fileObjs = [];
   files.forEach(function(file) {
