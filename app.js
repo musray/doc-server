@@ -52,13 +52,18 @@ app.get('/GET', function(req, res) {
     dataSet[no] = index_19[m]
   }
 
+  // documentCategory is direvied from webpage
+  // it might equals to 'ied', 'cin', 'iics', etc.
   var documentCategory = req.query.documents;
   var projectPath = '/' + req.query.projects;
-  // A list of templates will be processed
+
+  // This docsToGen will be produced by function
+  // genDocList( documentCategory )
+  // A list of templates might be created
   // in a form of [ 'sw_check_list.xlsx', 'ied_cover.docx', 'check_record.xlsx' ]
-  var docsToGen = genDocList();
+  var docsToGen = genDocList( documentCategory );
   
-  // Use "generatedFiles" to collect the created docs
+  // Use "generatedFiles" to collect the name of created docs
   // Then used in "res.zip" method to gathering
   // docs to download.
   var generatedFiles = [];

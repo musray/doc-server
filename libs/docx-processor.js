@@ -1,9 +1,20 @@
 'use strict'
 var Docxtemplater = require('docxtemplater');
+var path = require('path');
+var fs = require('fs');
 
-module.exports = function ( content ) {
-  var output = new Docxtemplater(content);
-
+module.exports = function ( template, dataSet ) {
+  var tplContent = fs.readFileSync( template, 'binary' );
+  var output = new Docxtemplater(tplContent);
+  output.setData(dataSet);
+  output.render();
+  var buf = output.getZip()
+                  .generate({ type: 'nodebuffer' });
+  var outputFile = __dirname + '/'
+                   + dataSet.t + path.extname(content);
+  fs.writeFileSync(outputFile, buf);
+  console.log(path.basename(outputFile) + ' is generated!');
+  return outputFile;
 };
     // if ( extensionName == '.docx' ) {
     //   var output = new Docxtemplater(content);
