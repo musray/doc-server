@@ -81,7 +81,7 @@ app.get('/GET', function(req, res) {
                                       (doc + '_' + dataSet.t) );
     if ( templateExt == '.docx' ) {
       var docBuf = docxProcessor(templatePath, dataSet);
-      fs.writeFileSync(docBuf, generatedFilePath);
+      fs.writeFileSync( generatedFilePath, docBuf );
     } 
     // else if ( templateExt == '.xlsx') {
     //   // TODO
