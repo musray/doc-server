@@ -90,7 +90,7 @@ app.get('/GET', function(req, res) {
     } else if ( templateExt == '.xlsx') {
       // If it encounters a xlsx template
       var docBuf = xlsxProcessor();
-      console.log('***** DEBUGE messasge ' + docBuf + ' *****');
+      console.log('***** DEBUGE messasge ' + typeof docBuf + ' *****');
       // TODO ... then write the docBuf into file system
     }
 
@@ -120,7 +120,7 @@ console.log('Listening on localhost 2048');
 /* 
  * This function is used to generate 
  * the data structure object
- * required by res.zip function
+ * required by express-zip plug-in( res.zip )
  *
  * 1. argv
  * files must be an array of files' FULL pathes
