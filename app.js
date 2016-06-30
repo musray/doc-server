@@ -7,7 +7,6 @@ const fs = require('fs'),
       formatedDT = require('./libs/format-dt.js'),
       path = require('path'),
       zip = require('express-zip'),
-      XLSX = require('xlsx-template'),
       genDocList = require('./libs/gen-doc-list.js'),
       xlsxProcessor = require('./libs/xlsx-processor'),
       docxProcessor = require('./libs/docx-processor');
@@ -63,53 +62,60 @@ app.get('/GET', function(req, res) {
   var documentCategory = req.query.documents;
   var projectPath = '/' + req.query.projects;
 
-  // This docsToGen will be produced by function
+  // TODO This docsToGen will be produced by function
   // genDocList( documentCategory )
   // A list of templates might be created
   // in a form of [ 'sw_check_list.xlsx', 'ied_cover.docx', 'check_record.xlsx' ]
   // var docsToGen = genDocList( documentCategory );
   
+  // This only used in DEBUG stage.
   var docsToGen = [ 'ied_cover.docx',
                     'sw_check_list.docx',
                     'cin_cover.xlsx' ]
   
-  // Use "generatedFiles" to collect the name of created docs
-  // Then used in "res.zip" method to gathering
-  // docs to download.
+  /* 
+   * Use "generatedFiles" to collect the FULL path 
+   * of final docs created below.
+   * Then used in "express-zip"(res.zip method) module
+   * to gathering docs to download.
+   */
   var generatedFiles = [];
   async.eachSeries(docsToGen, function(doc, callback) {
+    // preperation
     var templatePath = path.join(__dirname, 'templates', projectPath, doc);
     var templateExt = path.extname(templatePath);
-    var generatedFilePath = path.join(__dirname, 'output', 
+    var generatedFilePath = path.join( __dirname, 'output', 
                                       (dataSet.t + '_' + doc) );
+    // <MAIN block>
     if ( templateExt == '.docx' ) {
       // If it encounters a docx template
       var docBuf = docxProcessor( templatePath, dataSet );
       fs.writeFileSync( generatedFilePath, docBuf );
-      generatedFiles.push( generatedFilePath );
     } else if ( templateExt == '.xlsx') {
       // If it encounters a xlsx template
       var docBuf = xlsxProcessor();
-      console.log('***** DEBUGE messasge ' + typeof docBuf + ' *****');
-      // TODO ... then write the docBuf into file system
+      fs.writeFileSync(generatedFilePath, docBuf, 'binary');
     }
-
+    generatedFiles.push( generatedFilePath );
     callback();
+    // <MAIN block/>
+
     }, function (err) {
         if ( err ) { 
           console.log(err + ' + err') 
         } else {
-        // get an list of objects
-        // which are desired by res.zip method.
-        var downLoadFile = prepareDownLoad(generatedFiles);
-        res.zip(downLoadFile, function(err) {
-          if (err) {
-            console.log(err);
+        // An list of objects
+        // which are in the structure 
+        // required by express-zip module.
+        var downLoadFile = wrapTheDownLoads( generatedFiles );
+        res.zip(downLoadFile, function( err ) {
+          if ( err ) {
+            console.log( err );
           } else {
             console.log('files have been sent.');
           }
         })}
-    }
+    }  // there is no semi-colon, since the function is an argument
   );
 });
 
@@ -126,7 +132,7 @@ console.log('Listening on localhost 2048');
  * files must be an array of files' FULL pathes
  *
  */
-function prepareDownLoad ( files ) {
+function wrapTheDownLoads ( files ) {
   var fileObjs = [];
   files.forEach(function(file) {
     var fileObj = {};
