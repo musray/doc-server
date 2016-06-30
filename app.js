@@ -61,7 +61,9 @@ app.get('/GET', function(req, res) {
   // genDocList( documentCategory )
   // A list of templates might be created
   // in a form of [ 'sw_check_list.xlsx', 'ied_cover.docx', 'check_record.xlsx' ]
-  var docsToGen = genDocList( documentCategory );
+  // var docsToGen = genDocList( documentCategory );
+  
+  var docsToGen = [ 'ied_cover_template.docx', 'sw_check_list_template.docx' ]
   
   // Use "generatedFiles" to collect the name of created docs
   // Then used in "res.zip" method to gathering
@@ -73,16 +75,17 @@ app.get('/GET', function(req, res) {
     //             + '/templates' 
     //             + projectPath 
     //             + doc;
-    var filePath = path.join(__dirname, 'templates', projectPath, doc);
-    var extensionName = path.extname(filePath);
-    if ( extensionName == '.docx' ) {
-      // TODO
-    } else if (extensionName == '.xlsx') {
-      // TODO
-    }
-
-    var content = fs
-      .readFileSync(filePath, 'binary');
+    var templatePath = path.join(__dirname, 'templates', projectPath, doc);
+    var templateExt = path.extname(templatePath);
+    var generatedFilePath = path.join(__dirname, 'output', 
+                                      (doc + '_' + dataSet.t) );
+    if ( templateExt == '.docx' ) {
+      var docBuf = docxProcessor(templatePath, dataSet);
+      fs.writeFileSync(docBuf, generatedFilePath);
+    } 
+    // else if ( templateExt == '.xlsx') {
+    //   // TODO
+    // }
 
     // TODO
     // wrap the templating process
@@ -118,7 +121,7 @@ app.get('/GET', function(req, res) {
             console.log('files have been sent.');
           }
         })}
-    };
+    }
   );
 });
 
