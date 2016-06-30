@@ -10,6 +10,7 @@
     "xlsx-template": "0.0.3"
   },
   "devDependencies": {
+    "bower": "^1.7.9",
     "gulp": "^3.9.1",
     "gulp-mocha": "^2.2.0",
     "mocha": "^2.5.3",
