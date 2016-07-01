@@ -17,6 +17,11 @@ app.engine('html', engines.nunjucks);
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views');
 app.use(morgan('combined'));
+// config express.static to make it accessable
+// in the html's scirpt/src attribute, in this way:
+// <script src="/frontend/js/name.js"></script>
+app.use('/frontend', express.static( __dirname + '/frontend' ));
+app.use('/bower_components', express.static( __dirname + '/bower_components' ));
 
 // get request for root '/'
 app.get('/', function(req, res) {

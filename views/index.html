@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title></title>
+  <title>文档服务</title>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
 </head>
 <body>
 
@@ -12,7 +13,7 @@
 
     <div class="selection-group">
       <label for="documents">选择项目</label>
-      <select id="project_selection" name="projects">
+      <select id="project-selection" name="projects">
         <option value="cpr1000">CPR1000</option> 
         <option value="yj56">阳江56</option> 
         <option value="hyh56">红沿河56</option> 
@@ -25,7 +26,7 @@
     <div id="selection-group">
 
       <label for="documents">选择文件类型</label>
-      <select id="document_selection" name="documents">
+      <select id="document-selection" name="documents">
         <option value="ied">IED文件</option> 
         <option value="cin">CIN</option> 
         <option value="sw_cd">软件(光盘)送测</option> 
@@ -34,8 +35,8 @@
         <!-- <option value="iics">IICS</option>  -->
       </select>
 
-      <label for="sub_documents">选择子文件类型</label>
-      <select id="sub_document_selection" name="sub_documents">
+      <label for="sub-documents">选择子文件类型</label>
+      <select id="sub-document-selection" name="sub-documents">
         <option value="bdsd">FD(BDSD)功能图</option> 
         <option value="io_list">IO List</option> 
         <option value="software">Software软件图</option> 
@@ -77,5 +78,6 @@
     <button name="button">生成</button>
   </form>
 
+  <script src="frontend/js/content-specify.js"></script>
 </body>
 </html>
