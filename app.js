@@ -7,7 +7,7 @@ const fs = require('fs'),
       formatedDT = require('./libs/format-dt.js'),
       path = require('path'),
       zip = require('express-zip'),
-      genDocList = require('./libs/gen-doc-list.js'),
+      getTemplateList = require('./libs/gen-doc-list.js'),
       xlsxProcessor = require('./libs/xlsx-processor'),
       docxProcessor = require('./libs/docx-processor');
 
@@ -65,6 +65,9 @@ app.get('/GET', function(req, res) {
   // documentCategory is direvied from webpage
   // it might equals to 'ied', 'cin', 'iics', etc.
   var documentCategory = req.query.documents;
+  // documentCategory is direvied from webpage
+  // it might equals to 'bdsd', 'io_list', 'software', 'wiring', etc.
+  var subDocumentCategory = req.query.subDocuments;
   var projectPath = '/' + req.query.projects;
 
   // TODO This docsToGen will be produced by function
@@ -72,11 +75,12 @@ app.get('/GET', function(req, res) {
   // A list of templates might be created
   // in a form of [ 'sw_check_list.xlsx', 'ied_cover.docx', 'check_record.xlsx' ]
   // var docsToGen = genDocList( documentCategory );
+  var docsToGen = getTemplateList( documentCategory, subDocumentCategory );
   
   // This only used in DEBUG stage.
-  var docsToGen = [ 'ied_cover.docx',
-                    'sw_check_list.docx',
-                    'cin_cover.xlsx' ]
+  // var docsToGen = [ 'ied_cover.docx',
+  //                   'sw_check_list.docx',
+  //                   'cin_cover.xlsx' ]
   
   /* 
    * Use "generatedFiles" to collect the FULL path 

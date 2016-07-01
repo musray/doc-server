@@ -27,6 +27,7 @@
 
       <label for="documents">选择文件类型</label>
       <select id="document-selection" name="documents">
+        <option value="prompt">请选择</option> 
         <option value="ied">IED文件</option> 
         <option value="cin">CIN</option> 
         <option value="sw_cd">软件(光盘)送测</option> 
@@ -36,12 +37,13 @@
       </select>
 
       <label for="sub-documents">选择子文件类型</label>
-      <select id="sub-document-selection" name="sub-documents">
-        <option value="bdsd">FD(BDSD)功能图</option> 
-        <option value="io_list">IO List</option> 
-        <option value="software">Software软件图</option> 
-        <option value="wiring">WD(IF)接线图</option> 
-        <option value="layout">Layout布局图</option> 
+      <select id="sub-document-selection" name="subDocuments">
+        <option value="">--请先选择文件类型--</option> 
+        <!-- <option value="bdsd">FD(BDSD)功能图</option> --> 
+        <!-- <option value="io_list">IO List</option> --> 
+        <!-- <option value="software">Software软件图</option> --> 
+        <!-- <option value="wiring">WD(IF)接线图</option> --> 
+        <!-- <option value="layout">Layout布局图</option> --> 
       </select>
       <br>
     </div>
