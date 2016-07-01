@@ -92,8 +92,10 @@ app.get('/GET', function(req, res) {
       var docBuf = docxProcessor( templatePath, dataSet );
       fs.writeFileSync( generatedFilePath, docBuf );
     } else if ( templateExt == '.xlsx') {
+      // ***** DEBUG *****
+      console.log(typeof templatePath, templatePath);
       // If it encounters a xlsx template
-      var docBuf = xlsxProcessor();
+      var docBuf = xlsxProcessor( templatePath, dataSet );
       fs.writeFileSync(generatedFilePath, docBuf, 'binary');
     }
     generatedFiles.push( generatedFilePath );
@@ -120,8 +122,8 @@ app.get('/GET', function(req, res) {
 });
 
 // launch application
-app.listen(2048);
-console.log('Listening on localhost 2048');
+app.listen(9786);
+console.log('Listening on localhost 9786');
 
 /* 
  * This function is used to generate 
