@@ -9,76 +9,50 @@
 
   <h1>文档服务 <span id="h1-version">(rev 0.1)</span></h1>
 
-  <form action="GET">
+    <form action="GET">
 
-    <div class="selection-group">
-      <label for="documents">选择项目</label>
-      <select id="project-selection" name="projects">
-        <option value="cpr1000">CPR1000</option> 
-        <option value="yj56">阳江56</option> 
-        <option value="hyh56">红沿河56</option> 
-        <option value="tw56">田湾56</option> 
-        <option value="fcg34">防城港34</option> 
-      </select>
+      <div class="selection-group">
+        <label for="main_project">选择项目</label>
+        <select id="project-selection" name="main_project">
+          <option value="cpr1000">CPR1000</option> 
+          <option value="yj56">阳江56</option> 
+          <option value="hyh56">红沿河56</option> 
+          <option value="tw56">田湾56</option> 
+          <option value="fcg34">防城港34</option> 
+        </select>
+        <br>
+      </div>
+
+      <div id="selection-group">
+
+        <label for="document_category">选择文件类型</label>
+        <select id="document-selection" name="document_category">
+          <option value="prompt">请选择</option> 
+          <option value="ied">IED文件</option> 
+          <option value="cin">CIN</option> 
+          <option value="sw_cd">软件(光盘)送测</option> 
+          <option value="internal">部门文件</option> 
+          <!-- TODO -->
+          <!-- <option value="iics">IICS</option>  -->
+        </select>
+
+        <label for="sub_document">选择子文件类型</label>
+        <select id="sub-document-selection" name="sub_document">
+          <option value="">--请先选择文件类型--</option> 
+        </select>
+        <br>
+      </div>
+
+
+      <!-- contents in will be inserted by  -->
+      <!-- content&#45;specify.js -->
+      <div id="document_content"></div>
+
+
       <br>
-    </div>
 
-    <div id="selection-group">
-
-      <label for="documents">选择文件类型</label>
-      <select id="document-selection" name="documents">
-        <option value="prompt">请选择</option> 
-        <option value="ied">IED文件</option> 
-        <option value="cin">CIN</option> 
-        <option value="sw_cd">软件(光盘)送测</option> 
-        <option value="internal">部门文件</option> 
-        <!-- TODO -->
-        <!-- <option value="iics">IICS</option>  -->
-      </select>
-
-      <label for="sub-documents">选择子文件类型</label>
-      <select id="sub-document-selection" name="subDocuments">
-        <option value="">--请先选择文件类型--</option> 
-        <!-- <option value="bdsd">FD(BDSD)功能图</option> --> 
-        <!-- <option value="io_list">IO List</option> --> 
-        <!-- <option value="software">Software软件图</option> --> 
-        <!-- <option value="wiring">WD(IF)接线图</option> --> 
-        <!-- <option value="layout">Layout布局图</option> --> 
-      </select>
-      <br>
-    </div>
-    
-
-    <label for="index_19">19位编码</label>
-    <input type="text" name="index_19">
-
-    <label for="index_inter">内部编码</label>
-    <input type="text" name="index_short">
-
-    <label for="title">文件名称</label>
-    <input type="text" name="title">
-
-    <label for="rev">版本</label>
-    <input type="text" name="rev">
-
-    <label for="draft">设计人</label>
-    <input type="text" name="draft">
-
-    <label for="check">互查人</label>
-    <input type="text" name="check">
-
-    <label for="review">审核人</label>
-    <input type="text" name="review">
-
-    <label for="approve">批准人</label>
-    <input type="text" name="approve">
-
-    <label for="pages">总页数</label>
-    <input type="text" name="pages">
-    <br>
-
-    <button name="button">生成</button>
-  </form>
+      <button name="button">生成</button>
+    </form>
 
   <script src="frontend/js/content-specify.js"></script>
 </body>

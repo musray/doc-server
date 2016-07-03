@@ -23,6 +23,34 @@ app.use(morgan('combined'));
 app.use('/frontend', express.static( __dirname + '/frontend' ));
 app.use('/bower_components', express.static( __dirname + '/bower_components' ));
 
+// A 'catch-all' error handler copied from
+// express API document.
+// TODO Does this work as expected? 
+// I've no idea.
+function errorHandler(err, req, res, next) {
+  res.status(500);
+  res.render("<h1>Oops! 出错了！</h1>");
+}
+app.use(errorHandler);
+
+var issuer= {
+  'hyh-3': 'SDB',
+  'hyh-4': 'SDB',
+  'nd-3': 'SDB',
+  'nd-4': 'SDB',
+  'yj-1': 'YSDM',
+  'yj-2': 'YSDM',
+  'yj-3': 'YSDB',
+  'yj-4': 'YSDB',
+  'fcg-1':'SDM',
+  'fcg-2':'SDM'
+};
+var projectAlias = {
+  'hyh':'AA',
+  'nd':'AB',
+  'yj':'PY',
+  'fcg':'BL'
+};
 // get request for root '/'
 app.get('/', function(req, res) {
   res.render('index');
@@ -40,35 +68,55 @@ app.get('/GET', function(req, res) {
 
   // DATASET will be used in docx-templating
   var dataSet = {};
+  dataSet['project'] = req.query.project;
+  // get AA if project is 'hyh-1'
+  dataSet['p_a'] = req.query.project ? 
+                   projectAlias[req.query.project.slice(0, -2)] : '';
+  dataSet['unit'] = req.query.project ? 
+                    req.query.project.slice(-1) : '';
+  dataSet['site_stage'] = req.query.site_stage;
+  dataSet['n_o_t'] = req.query.number_of_times;
+  dataSet['issuer'] = issuer[req.query.project];
+  dataSet['cabinet'] = req.query.cabinet;
   dataSet['r'] = req.query.rev;
   dataSet['d_b'] = req.query.draft;
   dataSet['c_b'] = req.query.check;
   dataSet['r_b'] = req.query.review;
   dataSet['a_b'] = req.query.approve; 
-  dataSet['t'] = req.query.title;
+  if ( req.query.document_category == 'cin') {
+    dataSet['t'] = req.query.project + ' ' + 
+                   req.query.number_of_times + ' ' +
+                   req.query.site_stage + ' ' + 
+                   'site modification of' + ' ' + 
+                   req.query.cabinet;
+  } else {
+   dataSet['t'] = req.query.title;
+  }
   dataSet['i_s'] = req.query.index_short;
   dataSet['i_19'] = req.query.index_19;
   dataSet['pages'] = req.query.pages;
   dataSet['date'] = today.formatedDate('-');
   // splite index_19 into a list of each digit.
   var index_19 = req.query.index_19;
-  for ( let m = 0; m < req.query.index_19.length; m++ ) {
-    let no = 'i' + m;
-    dataSet[no] = index_19[m]
+  if ( req.query.index_19 ) {
+    for ( let m = 0; m < req.query.index_19.length; m++ ) {
+      let no = 'i' + m;
+      dataSet[no] = index_19[m]
+  }
   }
   // Applicable to CPR1000
   // TODO for other projetcs
   dataSet['observation'] = 
-    req.query.rev.toLowerCase() == 'a' ? 'First issue' 
-                                       : 'Revised according to design progress';
+    req.query.rev == 'A' ? 'First issue' 
+                         : 'Revised according to design progress';
 
   // documentCategory is direvied from webpage
   // it might equals to 'ied', 'cin', 'iics', etc.
-  var documentCategory = req.query.documents;
+  var documentCategory = req.query.document_category;
   // documentCategory is direvied from webpage
   // it might equals to 'bdsd', 'io_list', 'software', 'wiring', etc.
-  var subDocumentCategory = req.query.subDocuments;
-  var projectPath = '/' + req.query.projects;
+  var subDocumentCategory = req.query.sub_document;
+  var projectPath = '/' + req.query.main_project;
 
   // TODO This docsToGen will be produced by function
   // genDocList( documentCategory )

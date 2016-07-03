@@ -1,9 +1,11 @@
 'use strict'
 var xlsxProcessor = require('../libs/xlsx-processor');
 var path = require('path');
+var fs = require('fs');
 console.log('***** DEBUG *****');
 
 var template = path.join( __dirname, 'check_record.xlsx' );
+
 var dataSet = {};
 dataSet['r'] = 'A';
 dataSet['d_b'] = '周海';
@@ -16,7 +18,5 @@ dataSet['i_s'] = 'E10-P10-98999';
 dataSet['pages'] = '20';
 dataSet['date'] = '2016-07-01';
 
-console.log('debug 1' + template);
 var buf = xlsxProcessor( template, dataSet );
-console.log('debug 2' + template);
 fs.writeFileSync('output.xlsx', buf, 'binary');
