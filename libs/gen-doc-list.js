@@ -12,7 +12,7 @@ var iedCheckList = {
   'bdsd': 'bdsd_check_list.xlsx',
   'wiring': 'wd_check_list.xlsx',
   'software': 'sw_check_list.docx',
-  'io_list': 'sw_check_list.xlsx',
+  'io_list': 'io_check_list.xlsx',
 };
 
 module.exports = function ( documentCategory, subDocumentCategory ) {
