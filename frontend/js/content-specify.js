@@ -1,5 +1,7 @@
 var iedOptions = '<option value="bdsd">FD(BDSD)功能图</option> <option value="io_list">IO List</option> <option value="software">Software软件图</option> <option value="wiring">WD(IF)接线图</option> <option value="layout">Layout布局图</option>'; 
 
+var iedHTML = '<label for="index_19">19位编码</label> <input type="text" name="index_19"> <label for="index_inter">内部编码</label> <input type="text" name="index_short"> <label for="title">文件名称</label> <input type="text" name="title"> <label for="rev">版本</label> <input type="text" name="rev"> <label for="pages">总页数</label> <input type="text" name="pages"> <div id="signatures"> <label for="draft">设计人</label> <input type="text" name="draft"> <label for="check">互查人</label> <input type="text" name="check"> <label for="review">审核人</label> <input type="text" name="review"> <label for="approve">批准人</label> <input type="text" name="approve"> </div> <div id="signatures_e"> <label for="draft_e">Draft</label> <input type="text" name="draft_e"> <label for="check_e">Check</label> <input type="text" name="check_e"> <label for="review_e">Review</label> <input type="text" name="review_e"> <label for="approve_e">Approve</label> <input type="text" name="approve_e"> </div> '
+
 var cinHTML = ' <label for="project">项目</label> \
                 <select id="document-selection" name="project">\
                   <option value="yj-1">YJ-1</option> \
@@ -40,7 +42,7 @@ var cinHTML = ' <label for="project">项目</label> \
                 <input type="text" name="pages">';
 
 
-var iedHTML = '<label for="index_19">19位编码</label> <input type="text" name="index_19"> <label for="index_inter">内部编码</label> <input type="text" name="index_short"> <label for="title">文件名称</label> <input type="text" name="title"> <label for="rev">版本</label> <input type="text" name="rev"> <label for="draft">设计人</label> <input type="text" name="draft"> <label for="check">互查人</label> <input type="text" name="check"> <label for="review">审核人</label> <input type="text" name="review"> <label for="approve">批准人</label> <input type="text" name="approve"> <label for="pages">总页数</label> <input type="text" name="pages">';
+// var iedHTML = '<label for="index_19">19位编码</label> <input type="text" name="index_19"> <label for="index_inter">内部编码</label> <input type="text" name="index_short"> <label for="title">文件名称</label> <input type="text" name="title"> <label for="rev">版本</label> <input type="text" name="rev"> <label for="draft">设计人</label> <input type="text" name="draft"> <label for="check">互查人</label> <input type="text" name="check"> <label for="review">审核人</label> <input type="text" name="review"> <label for="approve">批准人</label> <input type="text" name="approve"> <label for="pages">总页数</label> <input type="text" name="pages">';
 
 
 var document_content = {};
