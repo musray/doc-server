@@ -31,13 +31,28 @@ var projectAlias = {
   'yj':'PY',
   'fcg':'BL'
 };
+var eomrIndex = {
+  'yj-1':'PY157110620W00A04GN',
+  'yj-2':'PY257110620W00A04GN',
+  'yj-3':'PY357110033W00A04GN',
+  'yj-4':'PY457110034W00A04GN',
+  'hyh-3':'AA357110201W00B04GN',
+  'hyh-4':'AA457110201W00B04GN',
+  'nd-3':'AB357110602W00B44GN',
+  'nd-4':'AB457110602W00B44GN',
+  'fcg-1':'BL157110033W00B04GN',
+  'fcg-2':'BL257110034W00B04GN'
+};
 
 module.exports = function ( reqQuery ) {
   // DATASET will be used in docx-templating
   var dataSet = {};
 
-  dataSet['project'] = reqQuery.project;
+  dataSet['project'] = reqQuery.project ?
+                       reqQuery.project.toUpperCase() : '';
   // get AA if project is 'hyh-1'
+  dataSet['site'] = reqQuery.project ?
+                    reqQuery.project.slice(0, -2).toUpperCase() : '';
   dataSet['p_a'] = reqQuery.project ? 
                    projectAlias[reqQuery.project.slice(0, -2)] : '';
   dataSet['unit'] = reqQuery.project ? 
@@ -46,7 +61,8 @@ module.exports = function ( reqQuery ) {
   dataSet['n_o_t'] = reqQuery.number_of_times;
   dataSet['supplyerCode'] = supplyerCode[reqQuery.project];
   dataSet['cabinet'] = reqQuery.cabinet;
-  dataSet['r'] = reqQuery.rev;
+  dataSet['r'] = reqQuery.rev ? 
+                 reqQuery.rev.toUpperCase() : '';
   dataSet['d_b'] = reqQuery.draft;
   dataSet['c_b'] = reqQuery.check;
   dataSet['r_b'] = reqQuery.review;
@@ -56,12 +72,14 @@ module.exports = function ( reqQuery ) {
   dataSet['r_b_e'] = reqQuery.review_e;
   dataSet['a_b_e'] = reqQuery.approve_e; 
   if ( reqQuery.document_category == 'cin') {
-    dataSet['t'] = reqQuery.project + ' ' + 
+    // title of CIN
+    dataSet['t'] = reqQuery.project.toUpperCase() + ' ' + 
                    reqQuery.number_of_times + ' ' +
                    reqQuery.site_stage + ' ' + 
                    'site modification of' + ' ' + 
                    reqQuery.cabinet;
   } else {
+    // title of documents other than CIN
    dataSet['t'] = reqQuery.title;
   }
   dataSet['i_s'] = reqQuery.index_short;
@@ -83,6 +101,9 @@ module.exports = function ( reqQuery ) {
   dataSet['observation'] = 
     reqQuery.rev == 'A' ? 'First issue' 
                          : 'Revised according to design progress';
+  
+  // get EOMR index number
+  dataSet['eomr'] = eomrIndex[reqQuery.project];
 
   return dataSet;
 };

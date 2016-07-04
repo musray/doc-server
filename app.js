@@ -69,6 +69,8 @@ app.get('/GET', function(req, res) {
    * document category and sub document type, if it is a IED document.
    */
    var docsToGen = getTemplateList( documentCategory, subDocumentCategory );
+   //Debug
+   // var docsToGen = ['cin_cover.xlsx'];
   
   /* 
    * Use "generatedFiles" to collect the FULL path 
@@ -90,7 +92,7 @@ app.get('/GET', function(req, res) {
       fs.writeFileSync( generatedFilePath, docBuf );
     } else if ( templateExt == '.xlsx') {
       // ***** DEBUG *****
-      console.log(typeof templatePath, templatePath);
+      // console.log(typeof templatePath, templatePath);
       // When it encounters a xlsx template
       var docBuf = xlsxProcessor( templatePath, dataSet );
       fs.writeFileSync(generatedFilePath, docBuf, 'binary');
