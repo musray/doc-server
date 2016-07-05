@@ -1,0 +1,18 @@
+{
+  "name": "doc-server",
+  "description": "a web application for creating docx and xlsx files from template.",
+  "main": "app.js",
+  "authors": [
+    "musray <churui.ctec@gmail.com>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "docx",
+    "xlsx"
+  ],
+  "homepage": "https://github.com/musray/doc-server",
+  "private": true,
+  "dependencies": {
+    "jquery": "^3.0.0"
+  }
+}
