@@ -124,8 +124,11 @@ app.get('/GET', function(req, res) {
 });
 
 // launch application
-app.listen(9786);
-console.log('Listening on localhost 9786');
+var port = process.argv[2]
+console.log('port is ' + port);
+port = port ? port : 9786;
+app.listen(port);
+console.log('Listening on localhost ' + port);
 
 /* 
  * This function is used to generate 
