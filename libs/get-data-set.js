@@ -110,7 +110,11 @@ module.exports = function ( reqQuery ) {
                       reqQuery.backup_name.toUpperCase() : '';
   dataSet['backup_path'] = reqQuery.backup_path? 
                       reqQuery.backup_path.toUpperCase() : '';
-  dataSet['s_r'] = 'V000.' + reqQuery.sw_rev; 
+
+  if ( reqQuery.sw_rev)  { 
+    dataSet['r'] = 'V000.' + reqQuery.sw_rev;
+  }
+
   dataSet['p_r'] = 'V' + reqQuery.pol_rev;
   dataSet['g_r'] = 'V' + reqQuery.gca_rev;
   dataSet['den'] = reqQuery.den_list;
