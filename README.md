@@ -5,16 +5,9 @@
 ## Code Convention
 
 ### HTML
-1. HTML property name : proerty_name
+1. HTML property name: `<input type="text" name="document_selection" id="doc_select">`
 
-### JS Script
-1. variable name: camelCase
-
-### Usage
-
-#### HTML
 This is how to define a input element in HTML:
-
 ```html
 <select id="document-selection" name="document_category">
   <option value="prompt_line">请选择</option> 
@@ -22,19 +15,27 @@ This is how to define a input element in HTML:
 </select>
 ```
 
-#### JS
+### JS Script
+1. JS Script's Name: `a-js-script-file.js`
+1. variable name: `camelCase`
+
 In the JS file:
 ```var documentCategory = res.query.document_category```
+
 
 ## TODO
 
 ### 整体功能完善
 2. 列一个可维护的文件类型与url参数的mapping cheatsheet。
-3. 将当前所有写在JS里的HTML，整理到一个文件里去。日后只在这个文件里对HTML模版进行维护。
-4. 在后端生成项目名称和项目编码
+1. 选择了大的项目之后，自动改变文件内容view里项目名称的选择。例如选择了YJ56之后，在文件内容的下拉列表里只有YJ5或者YJ6的选择。
 
 
 ### CPR1000 IED 功能完善
+1. 增加软件送测单及光盘检查内容表。
+
+### YJ56 功能
+1. 增加各类文件的检查内容表
+
 
 ### CIN功能完善
 3. 系统，做成select
@@ -48,6 +49,9 @@ In the JS file:
 2. IO List 检查内容表 2016年 7月 4日 星期一 13时20分06秒 CST
 3. ~~Layout 检查内容表~~  2016年 7月 4日 星期一 13时20分06秒 CST
 4. 所有Excel版本的文件，要用新建Excel表重制一下。2016年 7月 4日 星期一 13时20分06秒 CST
+3. 将当前所有写在JS里的HTML，整理到一个文件里去。日后只在这个文件里对HTML模版进行维护。2016年 7月 5日 星期二 13时19分57秒 CST
+4. 在后端生成项目名称和项目编码。2016年 7月 5日 星期二 13时19分57秒 CST
+
 
 
 ####v0.0.1
