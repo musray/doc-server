@@ -96,7 +96,7 @@ module.exports = function ( reqQuery ) {
     }
   }
 
-  // Applicable to CPR1000
+  // observation is applicable to CPR1000
   // TODO for other projetcs
   dataSet['observation'] = 
     reqQuery.rev == 'A' ? 'First issue' 
@@ -104,6 +104,17 @@ module.exports = function ( reqQuery ) {
   
   // get EOMR index number
   dataSet['eomr'] = eomrIndex[reqQuery.project];
+
+  // below section is added for swcd
+  dataSet['backup'] = reqQuery.backup_name? 
+                      reqQuery.backup_name.toUpperCase() : '';
+  dataSet['backup_path'] = reqQuery.backup_path? 
+                      reqQuery.backup_path.toUpperCase() : '';
+  dataSet['s_r'] = 'V000.' + reqQuery.sw_rev; 
+  dataSet['p_r'] = 'V' + reqQuery.pol_rev;
+  dataSet['g_r'] = 'V' + reqQuery.gca_rev;
+  dataSet['den'] = reqQuery.den_list;
+  dataSet['new_old_pages'] = reqQuery.new_old_pages;
 
   return dataSet;
 };

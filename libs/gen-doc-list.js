@@ -3,7 +3,7 @@
 var tplModle = {
     'ied': [ 'ied_cover.docx', 'check_record.xlsx' ],
     'cin': [ 'cin_cover.xlsx', 'cin_check_list.xlsx', 'check_record.xlsx' ],
-    'sw_cd': [ 'submit_sheet.docx', 'swcd_check_list', 'check_record.xlsx' ]
+    'swcd': [ 'swcd_cover.docx', 'check_record.xlsx' ] // , 'swcd_check_list'
 };
 
 // ***** TODO *****
