@@ -1,5 +1,6 @@
 .*swp 
 node_modules
 *.DS_Store
-output/
+output/*.xlsx
+output/*.docx
 bower_components
