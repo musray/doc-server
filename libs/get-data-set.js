@@ -48,18 +48,18 @@ module.exports = function ( reqQuery ) {
   // DATASET will be used in docx-templating
   var dataSet = {};
 
-  dataSet['project'] = reqQuery.project ?
-                       reqQuery.project.toUpperCase() : '';
-  // get AA if project is 'hyh-1'
-  dataSet['site'] = reqQuery.project ?
-                    reqQuery.project.slice(0, -2).toUpperCase() : '';
-  dataSet['p_a'] = reqQuery.project ? 
-                   projectAlias[reqQuery.project.slice(0, -2)] : '';
-  dataSet['unit'] = reqQuery.project ? 
-                    reqQuery.project.slice(-1) : '';
+  dataSet['unit'] = reqQuery.unit ?
+                       reqQuery.unit.toUpperCase() : '';
+  // get AA if unit is 'hyh-1'
+  dataSet['site'] = reqQuery.unit ?
+                    reqQuery.unit.slice(0, -2).toUpperCase() : '';
+  dataSet['p_a'] = reqQuery.unit ? 
+                   projectAlias[reqQuery.unit.slice(0, -2)] : '';
+  dataSet['unit_number'] = reqQuery.unit ? 
+                    reqQuery.unit.slice(-1) : '';
   dataSet['site_stage'] = reqQuery.site_stage;
   dataSet['n_o_t'] = reqQuery.number_of_times;
-  dataSet['supplyerCode'] = supplyerCode[reqQuery.project];
+  dataSet['supplyerCode'] = supplyerCode[reqQuery.unit];
   dataSet['cabinet'] = reqQuery.cabinet;
   dataSet['r'] = reqQuery.rev ? 
                  reqQuery.rev.toUpperCase() : '';
@@ -73,7 +73,7 @@ module.exports = function ( reqQuery ) {
   dataSet['a_b_e'] = reqQuery.approve_e; 
   if ( reqQuery.document_category == 'cin') {
     // title of CIN
-    dataSet['t'] = reqQuery.project.toUpperCase() + ' ' + 
+    dataSet['t'] = reqQuery.unit.toUpperCase() + ' ' + 
                    reqQuery.number_of_times + ' ' +
                    reqQuery.site_stage + ' ' + 
                    'site modification of' + ' ' + 
@@ -103,7 +103,7 @@ module.exports = function ( reqQuery ) {
                          : 'Revised according to design progress';
   
   // get EOMR index number
-  dataSet['eomr'] = eomrIndex[reqQuery.project];
+  dataSet['eomr'] = eomrIndex[reqQuery.unit];
 
   // below section is added for swcd
   dataSet['backup'] = reqQuery.backup_name? 

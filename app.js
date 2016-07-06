@@ -59,7 +59,7 @@ app.get('/GET', function(req, res) {
   // documentCategory is direvied from webpage
   // it might equals to 'bdsd', 'io_list', 'software', 'wiring', etc.
   var subDocumentCategory = req.query.sub_document;
-  var projectPath = '/' + req.query.main_project;
+  var projectPath = '/' + req.query.project;
 
 
   /*
