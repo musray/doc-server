@@ -43,6 +43,97 @@ var eomrIndex = {
   'fcg-1':'BL157110033W00B04GN',
   'fcg-2':'BL257110034W00B04GN'
 };
+var projectVerbose = {
+  'yj-1':'CPR1000 EXTENSION PROJECT DCS (D)',
+  'yj-2':'CPR1000 EXTENSION PROJECT DCS (D)',
+  'yj-3':'CPR1000 EXTENSION PROJECT DCS(YJ34)',
+  'yj-4':'CPR1000 EXTENSION PROJECT DCS(YJ34)',
+  'hyh-3':'CPR1000 EXTENSION PROJECT DCS (C)',
+  'hyh-4':'CPR1000 EXTENSION PROJECT DCS (C)',
+  'nd-3':'CPR1000 EXTENSION PROJECT DCS (E)',
+  'nd-4':'CPR1000 EXTENSION PROJECT DCS (E)',
+  'fcg-1':'CPR1000 EXTENSION PROJECT DCS (FCG)',
+  'fcg-2':'CPR1000 EXTENSION PROJECT DCS (FCG)'
+};
+var contractNumber = {
+  'yj-1':'NPD0909004',
+  'yj-2':'NPD0909004',
+  'yj-3':'NPD1104001',
+  'yj-4':'NPD1104001',
+  'hyh-3':'NPD0707002(C)',
+  'hyh-4':'NPD0707002(C)',
+  'nd-3':'NPD0911004',
+  'nd-4':'NPD0911004',
+  'fcg-1':'NPD1012003',
+  'fcg-2':'NPD1012003'
+};
+var observations = {
+  'cpr1000': {
+    'init': 'First Issue',
+    'update': 'Update accroding to design progress'
+  },
+  'tw56': {
+    'init': 'First Issue',
+    'update': 'Update accroding to design progress'
+  },
+  'hyh56': {
+    'init': 'First Issue',
+    'update': 'Update accroding to design progress'
+  },
+  'yj56': {
+    'init': 'First Issue',
+    'update': 'Update accroding to design progress'
+  },
+  'fcg34': {
+    'init': 'First Issue',
+    'update': 'Update accroding to design progress'
+  }
+};
+
+function generateRevRow ( reqQuery ) {
+  /*
+   * return an list of revision histories.
+   */
+  var revisionList = [];
+  var revQueue = '0ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  // var nextRev = reqQuery.rev;
+  for (var i = 1; i <= revQueue.indexOf(nextRev); i++) {
+    var revElem = {};
+    revElem.no = i;
+    revElem.r = revQueue[i];
+    revElem.date = ''; // here where mongodb query get intruduced
+
+    if (i = revQueue.indexOf(nextRev)) {
+      revElem.d_b = reqQuery.draft;
+      revElem.d_b_e = reqQuery.draft_e;
+      revElem.c_b = reqQuery.check;
+      revElem.c_b_e = reqQuery.check_e;
+      revElem.r_b = reqQuery.review;
+      revElem.r_b_e = reqQuery.review;
+      revElem.a_b = reqQuery.approve;
+      revElem.a_b_e = reqQuery.approve;
+    } else {
+      revElem.d_b = ;  // here where mongodb query get introduced.
+      revElem.d_b_e = ;
+      revElem.c_b = ;
+      revElem.c_b_e = ;
+      revElem.r_b = ;
+      revElem.r_b_e = ;
+      revElem.a_b = ;
+      revElem.a_b_e = ;
+    } 
+
+    if (i == 1) {
+      revElem.observation = observation[reqQuery.project].init;
+    } else {
+      revElem.observation = observation[reqQuery.project].update;
+    }
+
+    list.push(revElem);
+  }
+
+  return revisionList;
+}
 
 module.exports = function ( reqQuery ) {
   // DATASET will be used in docx-templating
@@ -119,6 +210,13 @@ module.exports = function ( reqQuery ) {
   dataSet['g_r'] = 'V' + reqQuery.gca_rev;
   dataSet['den'] = reqQuery.den_list;
   dataSet['new_old_pages'] = reqQuery.new_old_pages;
+
+  // some verbose things
+  dataSet['project_verbose'] = projectVerbose[reqQuery.unit];
+  dataSet['contract_number'] = contractNumber[reqQuery.unit];
+
+  // for multi-revision document covers
+  dataSet['rev_row'] = generateRevRow( reqQuery );
 
   return dataSet;
 };
