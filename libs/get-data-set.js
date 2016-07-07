@@ -235,10 +235,11 @@ module.exports = function ( reqQuery ) {
 
   // for multi-revision document covers
   dataSet['r_r'] = generateRevRow( reqQuery );
-  console.log(dataSet['r_r']);
-  var middleList = dataSet['r_r'];
   dataSet['r_r_r'] = middleList.reverse();
-  console.log(dataSet['r_r_r']);
+  // dataSet['rev_row1'] = generateRevRow.row1;
+  // dataSet['rev_row2'] = ;
+  // dataSet['rev_row3'] = ;
+  // dataSet['rev_row4'] = ;
 
   return dataSet;
 };
