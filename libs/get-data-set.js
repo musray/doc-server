@@ -96,14 +96,15 @@ function generateRevRow ( reqQuery ) {
    */
   var revisionList = [];
   var revQueue = '0ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  // var nextRev = reqQuery.rev;
+  var nextRev = reqQuery.rev? reqQuery.rev.toUpperCase() : '';
   for (var i = 1; i <= revQueue.indexOf(nextRev); i++) {
+    console.log(i);
     var revElem = {};
     revElem.no = i;
     revElem.r = revQueue[i];
     revElem.date = ''; // here where mongodb query get intruduced
 
-    if (i = revQueue.indexOf(nextRev)) {
+    if (i == revQueue.indexOf(nextRev)) {
       revElem.d_b = reqQuery.draft;
       revElem.d_b_e = reqQuery.draft_e;
       revElem.c_b = reqQuery.check;
@@ -113,23 +114,40 @@ function generateRevRow ( reqQuery ) {
       revElem.a_b = reqQuery.approve;
       revElem.a_b_e = reqQuery.approve;
     } else {
-      revElem.d_b = ;  // here where mongodb query get introduced.
-      revElem.d_b_e = ;
-      revElem.c_b = ;
-      revElem.c_b_e = ;
-      revElem.r_b = ;
-      revElem.r_b_e = ;
-      revElem.a_b = ;
-      revElem.a_b_e = ;
+      revElem.d_b = '';  // here where mongodb query get introduced.
+      revElem.d_b_e = '';
+      revElem.c_b = '';
+      revElem.c_b_e = '';
+      revElem.r_b = '';
+      revElem.r_b_e = '';
+      revElem.a_b = '';
+      revElem.a_b_e = '';
     } 
 
     if (i == 1) {
-      revElem.observation = observation[reqQuery.project].init;
+      revElem.observation = observations[reqQuery.project].init;
     } else {
-      revElem.observation = observation[reqQuery.project].update;
+      revElem.observation = observations[reqQuery.project].update;
     }
 
-    list.push(revElem);
+    revisionList.push(revElem);
+  }
+
+  for ( var m = revisionList.length; m < 3; m++) {
+    let dummyElem = {
+      no: '',
+      r: '',
+      date: '',
+      d_b: '',  
+      d_b_e: '',
+      c_b: '',
+      c_b_e: '',
+      r_b: '',
+      r_b_e: '',
+      a_b: '',
+      a_b_e: ''
+    }
+    revisionList.push(dummyElem);
   }
 
   return revisionList;
@@ -216,7 +234,11 @@ module.exports = function ( reqQuery ) {
   dataSet['contract_number'] = contractNumber[reqQuery.unit];
 
   // for multi-revision document covers
-  dataSet['rev_row'] = generateRevRow( reqQuery );
+  dataSet['r_r'] = generateRevRow( reqQuery );
+  console.log(dataSet['r_r']);
+  var middleList = dataSet['r_r'];
+  dataSet['r_r_r'] = middleList.reverse();
+  console.log(dataSet['r_r_r']);
 
   return dataSet;
 };
