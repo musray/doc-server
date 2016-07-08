@@ -121,9 +121,9 @@ function generateRevRow ( reqQuery ) {
       revElem.c_b = reqQuery.check;
       revElem.c_b_e = reqQuery.check_e;
       revElem.r_b = reqQuery.review;
-      revElem.r_b_e = reqQuery.review;
+      revElem.r_b_e = reqQuery.review_e;
       revElem.a_b = reqQuery.approve;
-      revElem.a_b_e = reqQuery.approve;
+      revElem.a_b_e = reqQuery.approve_e;
     } else {
       revElem.d_b = '';  // here where mongodb query get introduced.
       revElem.d_b_e = '';
@@ -239,10 +239,10 @@ module.exports = function ( reqQuery ) {
 
   var revRow = generateRevRow( reqQuery );
   dataSet['r_r_1'] = autoExtRevRow(revRow, 3, revElem).slice(-3).reverse();  // for first page of cover
-  dataSet['r_r_2'] = autoExtRevRow(revRow.slice(0, -3), 12, revElem).slice(-12);
+  dataSet['r_r_2'] = autoExtRevRow(revRow.slice(0, -3), 12, revElem).slice(-16);
   dataSet['r_r_3'] = autoExtRevRow(revRow, 7, revElem).slice(-7);
   dataSet['r_r_4'] = autoExtRevRow(revRow, 17, revElem).slice(-18);
-  dataSet['r_leading'] = revRow.slice(0, -3) ?
+  dataSet['r_leading'] = revRow.slice(0, -3).pop() ?
                          revRow.slice(0, -3).pop()['r'].toUpperCase() : '';
 
   return dataSet;

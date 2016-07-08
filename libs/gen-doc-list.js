@@ -18,7 +18,7 @@ var iedCheckList = {
 module.exports = function ( documentCategory, subDocumentCategory, iedRev ) {
   // documentCategory might be
   // ied, cin, iics
-  var revisions = ['a', 'b', 'c']
+  var revisions = ['A', 'B', 'C', 'a', 'b', 'c']
   var templateList = [];
   if (subDocumentCategory) {
     templateList = tplModle[ documentCategory ]
