@@ -68,7 +68,9 @@ app.get('/GET', function(req, res) {
    * This list is created accroding to
    * document category and sub document type, if it is a IED document.
    */
-   var docsToGen = getTemplateList( documentCategory, subDocumentCategory );
+   var docsToGen = getTemplateList( documentCategory, 
+                                    subDocumentCategory, 
+                                    req.query.rev );
    //Debug
    // var docsToGen = ['cin_cover.xlsx'];
   

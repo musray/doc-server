@@ -91,7 +91,9 @@ var observations = {
 };
 
 function autoExtRevRow ( list, number, obj ) {
-  var tempList = list.slice();
+  // if list.length < number,
+  // extend the list with obj
+  var tempList = list.slice(); // use slice to avoid modifing list directly.
   for (var len = list.length; len < number; len++) {
     tempList.push(obj);
   }
@@ -237,10 +239,11 @@ module.exports = function ( reqQuery ) {
 
   var revRow = generateRevRow( reqQuery );
   dataSet['r_r_1'] = autoExtRevRow(revRow, 3, revElem).slice(-3).reverse();  // for first page of cover
-  dataSet['r_r_2'] = autoExtRevRow(revRow, 10, revElem);
+  dataSet['r_r_2'] = autoExtRevRow(revRow.slice(0, -3), 12, revElem).slice(-12);
   dataSet['r_r_3'] = autoExtRevRow(revRow, 7, revElem).slice(-7);
-  console.log(dataSet['r_r_3']);
-  dataSet['r_r_4'] = autoExtRevRow(revRow, 17, revElem).slice(-17);
+  dataSet['r_r_4'] = autoExtRevRow(revRow, 17, revElem).slice(-18);
+  dataSet['r_leading'] = revRow.slice(0, -3) ?
+                         revRow.slice(0, -3).pop()['r'].toUpperCase() : '';
 
   return dataSet;
 };
