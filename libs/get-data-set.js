@@ -90,6 +90,14 @@ var observations = {
   }
 };
 
+function autoExtRevRow ( list, number, obj ) {
+  var tempList = list.slice();
+  for (var len = list.length; len < number; len++) {
+    tempList.push(obj);
+  }
+  return tempList;
+}
+
 function generateRevRow ( reqQuery ) {
   /*
    * return an list of revision histories.
@@ -100,6 +108,7 @@ function generateRevRow ( reqQuery ) {
   for (var i = 1; i <= revQueue.indexOf(nextRev); i++) {
     console.log(i);
     var revElem = {};
+    revElem.st = 'CFC';
     revElem.no = i;
     revElem.r = revQueue[i];
     revElem.date = ''; // here where mongodb query get intruduced
@@ -131,23 +140,6 @@ function generateRevRow ( reqQuery ) {
     }
 
     revisionList.push(revElem);
-  }
-
-  for ( var m = revisionList.length; m < 3; m++) {
-    let dummyElem = {
-      no: '',
-      r: '',
-      date: '',
-      d_b: '',  
-      d_b_e: '',
-      c_b: '',
-      c_b_e: '',
-      r_b: '',
-      r_b_e: '',
-      a_b: '',
-      a_b_e: ''
-    }
-    revisionList.push(dummyElem);
   }
 
   return revisionList;
@@ -234,12 +226,21 @@ module.exports = function ( reqQuery ) {
   dataSet['contract_number'] = contractNumber[reqQuery.unit];
 
   // for multi-revision document covers
-  dataSet['r_r'] = generateRevRow( reqQuery );
-  dataSet['r_r_r'] = middleList.reverse();
-  // dataSet['rev_row1'] = generateRevRow.row1;
-  // dataSet['rev_row2'] = ;
-  // dataSet['rev_row3'] = ;
-  // dataSet['rev_row4'] = ;
+  // revRow will be a list of revision histories
+  // which has a minimum lenght of 7 
+  // (determined by ied document cover structure)
+  var revElem = { 'st': '', 'no':'', 'r':'', 'date':'', 
+                  'd_b':'', 'd_b_e':'', 
+                  'c_b':'', 'c_b_e':'', 
+                  'r_b':'', 'r_b_e':'', 
+                  'a_b':'', 'a_b_e':'', 'observation':'' }
+
+  var revRow = generateRevRow( reqQuery );
+  dataSet['r_r_1'] = autoExtRevRow(revRow, 3, revElem).slice(-3).reverse();  // for first page of cover
+  dataSet['r_r_2'] = autoExtRevRow(revRow, 10, revElem);
+  dataSet['r_r_3'] = autoExtRevRow(revRow, 7, revElem).slice(-7);
+  console.log(dataSet['r_r_3']);
+  dataSet['r_r_4'] = autoExtRevRow(revRow, 17, revElem).slice(-17);
 
   return dataSet;
 };
