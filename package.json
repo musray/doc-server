@@ -5,6 +5,7 @@
     "docxtemplater": "^2.1.1",
     "express": "^4.14.0",
     "express-zip": "^2.0.1",
+    "mongoose": "^4.5.3",
     "morgan": "^1.7.0",
     "nunjucks": "^2.4.2",
     "xlsx-template": "0.0.3"
