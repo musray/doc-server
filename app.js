@@ -38,8 +38,8 @@ function errorHandler(err, req, res, next) {
 app.use(errorHandler);
 
 // use the REST API
-// require('./models')(wagner);
-// app.use('api/v1', require('./api')(wagner));
+require('./api/models')(wagner);
+app.use('/api/v1', require('./api/api')(wagner));
 
 
 // get request for root '/'
