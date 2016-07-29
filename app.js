@@ -10,6 +10,8 @@ const fs = require('fs'),
       getTemplateList = require('./libs/gen-doc-list.js'),
       xlsxProcessor = require('./libs/xlsx-processor'),
       docxProcessor = require('./libs/docx-processor'),
+      wagner = require('wagner-core'),
+      mongoose = require('mongoose'),
       getDataSet = require('./libs/get-data-set.js');
 
 // set up express application
@@ -22,7 +24,8 @@ app.use(morgan('combined'));
 // in the html's scirpt/src attribute, in this way:
 // <script src="/frontend/js/name.js"></script>
 app.use('/frontend', express.static( __dirname + '/frontend' ));
-app.use('/bower_components', express.static( __dirname + '/bower_components' ));
+app.use('/bower_components', express.static( __dirname + '/bower_components'));
+app.use('/db', express.static( __dirname + '/db'));
 
 // A 'catch-all' error handler copied from
 // express API document.
@@ -33,6 +36,10 @@ function errorHandler(err, req, res, next) {
   res.render("<h1>Oops! 出错了！</h1>");
 }
 app.use(errorHandler);
+
+// use the REST API
+// require('./models')(wagner);
+// app.use('api/v1', require('./api')(wagner));
 
 
 // get request for root '/'

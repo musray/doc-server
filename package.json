@@ -5,9 +5,12 @@
     "docxtemplater": "^2.1.1",
     "express": "^4.14.0",
     "express-zip": "^2.0.1",
-    "mongoose": "^4.5.3",
+    "http-status": "^0.2.3",
+    "mongoose": "^4.5.7",
     "morgan": "^1.7.0",
     "nunjucks": "^2.4.2",
+    "underscore": "^1.8.3",
+    "wagner-core": "^0.2.0",
     "xlsx-template": "0.0.3"
   },
   "devDependencies": {
