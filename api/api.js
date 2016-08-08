@@ -1,12 +1,13 @@
 'use strict'
 const
   express = require('express'),
+  cors = require('cors'),
   status = require('http-status');
 
 module.exports = function(wagner) {
   var api = express.Router();
 
-  api.get('/document/index/:index', wagner.invoke(function(Doc) {
+  api.get('/document/index/:index', cors(), wagner.invoke(function(Doc) {
     return function(req, res) {
       Doc.findOne({ index: req.params.index }, function(err, doc) {
         console.log(req.param.index);

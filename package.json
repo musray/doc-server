@@ -2,6 +2,7 @@
   "dependencies": {
     "async": "^1.5.2",
     "consolidate": "^0.14.1",
+    "cors": "^2.7.1",
     "docxtemplater": "^2.1.1",
     "express": "^4.14.0",
     "express-zip": "^2.0.1",
