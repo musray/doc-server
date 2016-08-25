@@ -16,17 +16,18 @@ const fs = require('fs'),
 
 // set up express application
 const app = express();
-app.engine('html', engines.nunjucks);
-app.set('view engine', 'html');
-app.set('views', __dirname + '/views');
+// app.engine('html', engines.nunjucks);
+// app.set('view engine', 'html');
+// app.set('views', __dirname + '/views');
 app.use(morgan('combined'));
+
+// config to loading scripts and css sheets ===============================
 // config express.static to make it accessable
 // in the html's scirpt/src attribute, in this way:
-// <script src="/frontend/js/name.js"></script>
-app.use('/frontend', express.static( __dirname + '/frontend' ));
 app.use('/bower_components', express.static( __dirname + '/bower_components'));
-app.use('/db', express.static( __dirname + '/db'));
+app.use('/client', express.static( __dirname + '/client'));
 
+// Error handler ==========================================================
 // A 'catch-all' error handler copied from
 // express API document.
 // TODO Does this work as expected? 
@@ -44,7 +45,8 @@ app.use('/api/v1', require('./api/api')(wagner));
 
 // get request for root '/'
 app.get('/', function(req, res) {
-  res.render('index');
+  // res.render('index');
+  res.sendfile('./client/index.html');
 });
 
 // get request for /GET request
