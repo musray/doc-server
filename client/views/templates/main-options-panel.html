@@ -3,28 +3,24 @@
 
   <label for="project">选择项目</label>
   <select name="project"
-          ng-init="selectedOption.project = mainOptions[0].project"
           ng-model="selectedOption.project"
-          ng-options="project as item.project for item in mainOptions">
+          ng-options="project for project in projects">
   </select>
 
-  <!-- <label for="category">选择文件类型</label> -->
-  <!-- <select name="category" -->
-  <!--         ng-model="selectedCategory"> -->
+  <label for="category">选择文件类型</label>
+  <select name="category"
+          ng-model="selectedOption.docType"
+          ng-options="type for type in docTypes">
+  </select>
 
-  <!--     <option ng-repeat="category in mainOptions.categories"> -->
-  <!--       {{category}} -->
-  <!--     </option> -->
+  <label for="subCategory">选择子文件类型</label>
+  <select name="subCategory"
+          ng-model="selectedOption.subDoc"
+          ng-options="subDoc for subDoc in subDocTypes[selectedOption.project][selectedOption.docType]">
+  </select require>
 
-  <!-- </select> -->
+  <div>
+    {{selectedOption}}
+  </div>
 
-  <!-- <label for="subCategory">选择子文件类型</label> -->
-  <!-- <select name="subCategory" -->
-  <!--         ng-model="selectedSubCategory"> -->
-
-  <!--     <option ng-repeat="subCategory in mainOptions.subOptions.[selectedCategory]"> -->
-  <!--       {{subCategory}} -->
-  <!--     </option> -->
-
-  <!-- </select> -->
 </div>

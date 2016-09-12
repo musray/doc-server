@@ -6,6 +6,7 @@ angular.module('docApp')
           restrict: 'E',
           scope: {},
             link: function ($scope) {
+
                 var FirmsysDocModel = {
                   'IED': [
                     'FD',
@@ -29,32 +30,31 @@ angular.module('docApp')
                   '文件发布': ['default']
                 };
 
-                var selectedOption = {
+                $scope.selectedOption = {
                   project: ''
                 };
 
-                $scope.mainOptions = [
-                  {
-                    project: 'CPR1000',
-                    categories: MELTACDocModel
-                  },
-                  {
-                    project: 'YJ34',
-                    categories: FirmsysDocModel
-                  },
-                  {
-                    project: 'HYH56',
-                    categories: FirmsysDocModel
-                  },
-                  {
-                    project: 'TW56',
-                    categories: FirmsysDocModel
-                  },
-                  {
-                    project: 'FCG34',
-                    categories: FirmsysDocModel
-                  }
-            ]
+                $scope.projects = [
+                  'CPR1000',
+                  'YJ56',
+                  'HYH34',
+                  'TW56',
+                  'FCG34',
+                  '组级文件',
+                ];
+                $scope.docTypes = [
+                  'IED',
+                  'CIN',
+                  '光盘送测单',
+                  '文件发布'
+                ];
+                $scope.subDocTypes = {
+                    'CPR1000': MELTACDocModel,
+                    'YJ56':    FirmsysDocModel,
+                    'HYH56':   FirmsysDocModel,
+                    'TW56':    FirmsysDocModel,
+                    'FCG34':   FirmsysDocModel
+                };
             }
         }
     })
