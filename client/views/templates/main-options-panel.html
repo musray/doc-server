@@ -1,0 +1,30 @@
+<div class="placehold">
+  <h2>基本信息</h2>
+
+  <label for="project">选择项目</label>
+  <select name="project"
+          ng-init="selectedOption.project = mainOptions[0].project"
+          ng-model="selectedOption.project"
+          ng-options="project as item.project for item in mainOptions">
+  </select>
+
+  <!-- <label for="category">选择文件类型</label> -->
+  <!-- <select name="category" -->
+  <!--         ng-model="selectedCategory"> -->
+
+  <!--     <option ng-repeat="category in mainOptions.categories"> -->
+  <!--       {{category}} -->
+  <!--     </option> -->
+
+  <!-- </select> -->
+
+  <!-- <label for="subCategory">选择子文件类型</label> -->
+  <!-- <select name="subCategory" -->
+  <!--         ng-model="selectedSubCategory"> -->
+
+  <!--     <option ng-repeat="subCategory in mainOptions.subOptions.[selectedCategory]"> -->
+  <!--       {{subCategory}} -->
+  <!--     </option> -->
+
+  <!-- </select> -->
+</div>
