@@ -30,6 +30,11 @@ angular.module('docApp')
                   '文件发布': ['default']
                 };
 
+                var GeneralDocModel = {
+                  '流程规范': ['default'],
+                  '文件发布': ['项目文件发布', '组级文件发布']
+                };
+
                 $scope.selectedOption = {
                   project: ''
                 };
@@ -40,12 +45,13 @@ angular.module('docApp')
                   'HYH34',
                   'TW56',
                   'FCG34',
-                  '组级文件',
+                  '组级文件'
                 ];
                 $scope.docTypes = [
                   'IED',
                   'CIN',
                   '光盘送测单',
+                  '流程规范',
                   '文件发布'
                 ];
                 $scope.subDocTypes = {
@@ -53,7 +59,8 @@ angular.module('docApp')
                     'YJ56':    FirmsysDocModel,
                     'HYH56':   FirmsysDocModel,
                     'TW56':    FirmsysDocModel,
-                    'FCG34':   FirmsysDocModel
+                    'FCG34':   FirmsysDocModel,
+                    '组级文件':   GeneralDocModel,
                 };
             }
         }
