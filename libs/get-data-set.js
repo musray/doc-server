@@ -1,13 +1,15 @@
 'use strict'
 /*
- * 
+ *
  * Pass res.query object into this module.
  * The parse the url query parameters and
  * save them in a full set of dataSet object.
- * dataSet will be use to fill out  in docx or xlsx templates
+ * dataSet will be use to fill to docx or xlsx templates
  *
  */
 
+// The helper function which handle the formats
+// of date and time object.
 const formatedDT = require('./format-dt.js');
 
 Date.prototype.formatedDate = formatedDT.formatedDate;
@@ -133,7 +135,7 @@ function generateRevRow ( reqQuery ) {
       revElem.r_b_e = '';
       revElem.a_b = '';
       revElem.a_b_e = '';
-    } 
+    }
 
     if (i == 1) {
       revElem.observation = observations[reqQuery.project].init;
@@ -156,30 +158,30 @@ module.exports = function ( reqQuery ) {
   // get AA if unit is 'hyh-1'
   dataSet['site'] = reqQuery.unit ?
                     reqQuery.unit.slice(0, -2).toUpperCase() : '';
-  dataSet['p_a'] = reqQuery.unit ? 
+  dataSet['p_a'] = reqQuery.unit ?
                    projectAlias[reqQuery.unit.slice(0, -2)] : '';
-  dataSet['unit_number'] = reqQuery.unit ? 
+  dataSet['unit_number'] = reqQuery.unit ?
                     reqQuery.unit.slice(-1) : '';
   dataSet['site_stage'] = reqQuery.site_stage;
   dataSet['n_o_t'] = reqQuery.number_of_times;
   dataSet['supplyerCode'] = supplyerCode[reqQuery.unit];
   dataSet['cabinet'] = reqQuery.cabinet;
-  dataSet['r'] = reqQuery.rev ? 
+  dataSet['r'] = reqQuery.rev ?
                  reqQuery.rev.toUpperCase() : '';
   dataSet['d_b'] = reqQuery.draft;
   dataSet['c_b'] = reqQuery.check;
   dataSet['r_b'] = reqQuery.review;
-  dataSet['a_b'] = reqQuery.approve; 
+  dataSet['a_b'] = reqQuery.approve;
   dataSet['d_b_e'] = reqQuery.draft_e;
   dataSet['c_b_e'] = reqQuery.check_e;
   dataSet['r_b_e'] = reqQuery.review_e;
-  dataSet['a_b_e'] = reqQuery.approve_e; 
+  dataSet['a_b_e'] = reqQuery.approve_e;
   if ( reqQuery.document_category == 'cin') {
     // title of CIN
-    dataSet['t'] = reqQuery.unit.toUpperCase() + ' ' + 
+    dataSet['t'] = reqQuery.unit.toUpperCase() + ' ' +
                    reqQuery.number_of_times + ' ' +
-                   reqQuery.site_stage + ' ' + 
-                   'site modification of' + ' ' + 
+                   reqQuery.site_stage + ' ' +
+                   'site modification of' + ' ' +
                    reqQuery.cabinet;
   } else {
     // title of documents other than CIN
@@ -201,20 +203,20 @@ module.exports = function ( reqQuery ) {
 
   // observation is applicable to CPR1000
   // TODO for other projetcs
-  dataSet['observation'] = 
-    reqQuery.rev == 'A' ? 'First issue' 
+  dataSet['observation'] =
+    reqQuery.rev == 'A' ? 'First issue'
                          : 'Revised according to design progress';
-  
+
   // get EOMR index number
   dataSet['eomr'] = eomrIndex[reqQuery.unit];
 
   // below section is added for swcd
-  dataSet['backup'] = reqQuery.backup_name? 
+  dataSet['backup'] = reqQuery.backup_name?
                       reqQuery.backup_name.toUpperCase() : '';
-  dataSet['backup_path'] = reqQuery.backup_path? 
+  dataSet['backup_path'] = reqQuery.backup_path?
                       reqQuery.backup_path.toUpperCase() : '';
 
-  if ( reqQuery.sw_rev)  { 
+  if ( reqQuery.sw_rev)  {
     dataSet['r'] = 'V000.' + reqQuery.sw_rev;
   }
 
@@ -229,12 +231,12 @@ module.exports = function ( reqQuery ) {
 
   // for multi-revision document covers
   // revRow will be a list of revision histories
-  // which has a minimum lenght of 7 
+  // which has a minimum lenght of 7
   // (determined by ied document cover structure)
-  var revElem = { 'st': '', 'no':'', 'r':'', 'date':'', 
-                  'd_b':'', 'd_b_e':'', 
-                  'c_b':'', 'c_b_e':'', 
-                  'r_b':'', 'r_b_e':'', 
+  var revElem = { 'st': '', 'no':'', 'r':'', 'date':'',
+                  'd_b':'', 'd_b_e':'',
+                  'c_b':'', 'c_b_e':'',
+                  'r_b':'', 'r_b_e':'',
                   'a_b':'', 'a_b_e':'', 'observation':'' }
 
   var revRow = generateRevRow( reqQuery );
@@ -247,4 +249,3 @@ module.exports = function ( reqQuery ) {
 
   return dataSet;
 };
-

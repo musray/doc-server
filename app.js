@@ -14,23 +14,26 @@ const fs = require('fs'),
       mongoose = require('mongoose'),
       getDataSet = require('./libs/get-data-set.js');
 
-// set up express application
+// 1. Set up the Express application ========================
 const app = express();
-// app.engine('html', engines.nunjucks);
-// app.set('view engine', 'html');
-// app.set('views', __dirname + '/views');
+// 1.1 Setup the randering engine
+app.engine('html', engines.nunjucks);
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
+// 1.2 Logging history
 app.use(morgan('combined'));
 
-// config to loading scripts and css sheets ===============================
-// config express.static to make it accessable
-// in the html's scirpt/src attribute, in this way:
+// 2. Load framework or libs' scripts and css sheets ========
+// configuration of express.static
+// can make static files accessable
+// by the HTML's <scirpt src=""> element.
 app.use('/bower_components', express.static( __dirname + '/bower_components'));
-app.use('/client', express.static( __dirname + '/client'));
+app.use('/frontend', express.static( __dirname + '/frontend'));
 
-// Error handler ==========================================================
+// 3. Server side error handler ==============================
 // A 'catch-all' error handler copied from
 // express API document.
-// TODO Does this work as expected? 
+// TODO Does this work as expected?
 // I've no idea.
 function errorHandler(err, req, res, next) {
   res.status(500);
@@ -38,15 +41,14 @@ function errorHandler(err, req, res, next) {
 }
 app.use(errorHandler);
 
-// use the REST API
-require('./api/models')(wagner);
-app.use('/api/v1', require('./api/api')(wagner));
+// 4. Use the REST API =======================================
+// NOT decided yet.
+// require('./api/models')(wagner);
+// app.use('/api/v1', require('./api/api')(wagner));
 
-
-// get request for root '/'
+// 5. Response the Get request from root '/' =================
 app.get('/', function(req, res) {
-  // res.render('index');
-  res.sendfile('./client/index.html');
+  res.render('index');
 });
 
 // get request for /GET request
@@ -54,7 +56,7 @@ app.get('/', function(req, res) {
 app.get('/GET', function(req, res) {
 
   // create formated date and time string
-  // can be used at any place where 
+  // can be used at any place where
   // need current date or time
   // Date.prototype.formatedDate = formatedDT.formatedDate;
   // var today = new Date();
@@ -63,7 +65,7 @@ app.get('/GET', function(req, res) {
   var dataSet = getDataSet( req.query );
 
   // documentCategory is direvied from webpage
-  // it might equals to 'ied', 'cin', 'iics', etc.
+  // it might represent 'ied', 'cin', 'iics', etc.
   var documentCategory = req.query.document_category;
   // documentCategory is direvied from webpage
   // it might equals to 'bdsd', 'io_list', 'software', 'wiring', etc.
@@ -73,18 +75,19 @@ app.get('/GET', function(req, res) {
 
   /*
    * docsToGen is a list of names of templates
-   * which are ready to be filled automaticlly.
+   * which are located in /templates folder
+   * , and wating to be filled automaticlly.
    * This list is created accroding to
    * document category and sub document type, if it is a IED document.
    */
-   var docsToGen = getTemplateList( documentCategory, 
-                                    subDocumentCategory, 
+   var docsToGen = getTemplateList( documentCategory,
+                                    subDocumentCategory,
                                     req.query.rev );
-   //Debug
+   // ******* Debug *******
    // var docsToGen = ['cin_cover.xlsx'];
-  
-  /* 
-   * Use "generatedFiles" to collect the FULL path 
+
+  /*
+   * Use "generatedFiles" array to collect the FULL path
    * of final docs created below.
    * Then used in "express-zip"(res.zip method) module
    * to gathering docs to download.
@@ -94,17 +97,17 @@ app.get('/GET', function(req, res) {
     // Make some preperation
     var templatePath = path.join(__dirname, 'templates', projectPath, doc);
     var templateExt = path.extname(templatePath);
-    var generatedFilePath = path.join( __dirname, 'output', 
+    var generatedFilePath = path.join( __dirname, 'output',
                                       (dataSet.t + '_' + doc) );
     // <MAIN logic code block>
     if ( templateExt == '.docx' ) {
-      // When it encounters a docx template
+      // Case1 - When it encounters a docx template
       var docBuf = docxProcessor( templatePath, dataSet );
       fs.writeFileSync( generatedFilePath, docBuf );
     } else if ( templateExt == '.xlsx') {
+      // Case2 - When it encounters a xlsx template
       // ***** DEBUG *****
       // console.log(typeof templatePath, templatePath);
-      // When it encounters a xlsx template
       var docBuf = xlsxProcessor( templatePath, dataSet );
       fs.writeFileSync(generatedFilePath, docBuf, 'binary');
     }
@@ -113,12 +116,12 @@ app.get('/GET', function(req, res) {
     // <MAIN logic code block/>
 
     }, function (err) {
-        if ( err ) { 
-          console.log(err + ' + err') 
+        if ( err ) {
+          console.log(err + ' + err')
           res.send('Oops! Some bad things happend!');
         } else {
-        // downLoadFile is an list of objects
-        // which are organized in the particular structure 
+        // downLoadFile is an Array of objects
+        // which are organized in the particular structure
         // required by express-zip module.
         // wrapTheDownloads function is defined at bottom
         // of this script file.
@@ -141,12 +144,12 @@ port = port ? port : 9786;
 app.listen(port);
 console.log('Listening on localhost ' + port);
 
-/* 
- * This function is used to generate 
+/*
+ * This helper function is used to generate
  * the data structure object
  * required by express-zip plug-in( res.zip )
  *
- * 1. argv
+ * 1. about argv
  * files must be an array of files' FULL pathes
  *
  */
