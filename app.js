@@ -51,8 +51,8 @@ app.get('/', function(req, res) {
   res.render('index');
 });
 
-// get request for /GET request
-// Main Bussness Logic
+// 6. Response the Get request from /GET request =============
+// !!!!! MAIN BUSSNESS LOGIC !!!!!
 app.get('/GET', function(req, res) {
 
   // create formated date and time string
@@ -67,8 +67,10 @@ app.get('/GET', function(req, res) {
   // documentCategory is direvied from webpage
   // it might represent 'ied', 'cin', 'iics', etc.
   var documentCategory = req.query.document_category;
+
   // documentCategory is direvied from webpage
   // it might equals to 'bdsd', 'io_list', 'software', 'wiring', etc.
+  // If documentCategory is not IED, subDocumentCategory will be null.
   var subDocumentCategory = req.query.sub_document;
   var projectPath = '/' + req.query.project;
 
@@ -78,11 +80,12 @@ app.get('/GET', function(req, res) {
    * which are located in /templates folder
    * , and wating to be filled automaticlly.
    * This list is created accroding to
-   * document category and sub document type, if it is a IED document.
+   * document category. Sub document type, if it is a IED document.
    */
+   console.log('DEBUG INFO', req.query.project)
    var docsToGen = getTemplateList( documentCategory,
                                     subDocumentCategory,
-                                    req.query.rev );
+                                    req.query.project );
    // ******* Debug *******
    // var docsToGen = ['cin_cover.xlsx'];
 
@@ -94,21 +97,21 @@ app.get('/GET', function(req, res) {
    */
   var generatedFiles = [];
   async.eachSeries(docsToGen, function(doc, callback) {
-    // Make some preperation
-    var templatePath = path.join(__dirname, 'templates', projectPath, doc);
-    var templateExt = path.extname(templatePath);
+    // VARIABLE 'doc' is kind of abs path of a template file, such as
+    // ./templates/yj56/ied_cover.docx
+    var templateExt = path.extname(doc);
     var generatedFilePath = path.join( __dirname, 'output',
-                                      (dataSet.t + '_' + doc) );
+                                      (dataSet.t + '_' + path.basename(doc)) );
     // <MAIN logic code block>
     if ( templateExt == '.docx' ) {
       // Case1 - When it encounters a docx template
-      var docBuf = docxProcessor( templatePath, dataSet );
+      var docBuf = docxProcessor( doc, dataSet );
       fs.writeFileSync( generatedFilePath, docBuf );
     } else if ( templateExt == '.xlsx') {
       // Case2 - When it encounters a xlsx template
       // ***** DEBUG *****
       // console.log(typeof templatePath, templatePath);
-      var docBuf = xlsxProcessor( templatePath, dataSet );
+      var docBuf = xlsxProcessor( doc, dataSet );
       fs.writeFileSync(generatedFilePath, docBuf, 'binary');
     }
     generatedFiles.push( generatedFilePath );

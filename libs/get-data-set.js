@@ -95,7 +95,8 @@ var observations = {
 function autoExtRevRow ( list, number, obj ) {
   // if list.length < number,
   // extend the list with obj
-  var tempList = list.slice(); // use slice to avoid modifing list directly.
+  // otherwise, original list is returned.
+  var tempList = list.slice(); // use slice method to avoid modifing list directly.
   for (var len = list.length; len < number; len++) {
     tempList.push(obj);
   }
@@ -106,35 +107,46 @@ function generateRevRow ( reqQuery ) {
   /*
    * return an list of revision histories.
    */
+
+  // Note: the Date() constructor has been modified
+  var today = new Date();
+
+  // the array of data represents revision tables in the first
+  // , second and third page of IED cover.
   var revisionList = [];
-  var revQueue = '0ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
-  var nextRev = reqQuery.rev? reqQuery.rev.toUpperCase() : '';
+
+  var revQueue = '0ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split(''); // 0 has no meaning but taken the zero position.
+  var nextRev = reqQuery.rev? reqQuery.rev.toUpperCase() : ''; // nextRev stands for desired doc version.
+
+  // push each revElem, which represents to a revision, into revisionList
   for (var i = 1; i <= revQueue.indexOf(nextRev); i++) {
-    console.log(i);
+    // **** DEBUG ****
+    // console.log(i);
     var revElem = {};
     revElem.st = 'CFC';
     revElem.no = i;
     revElem.r = revQueue[i];
-    revElem.date = ''; // here where mongodb query get intruduced
 
-    if (i == revQueue.indexOf(nextRev)) {
-      revElem.d_b = reqQuery.draft;
-      revElem.d_b_e = reqQuery.draft_e;
-      revElem.c_b = reqQuery.check;
+    if (i == revQueue.indexOf(nextRev)) { // at the last round of iteration.
+      revElem.d_b   = reqQuery.draft;     // designed by
+      revElem.d_b_e = reqQuery.draft_e; // Signature in English will only involvoed in CPR1000 project
+      revElem.c_b   = reqQuery.check;     // checked by
       revElem.c_b_e = reqQuery.check_e;
-      revElem.r_b = reqQuery.review;
+      revElem.r_b   = reqQuery.review;    // reviewed by
       revElem.r_b_e = reqQuery.review_e;
-      revElem.a_b = reqQuery.approve;
+      revElem.a_b   = reqQuery.approve;   // approved by
       revElem.a_b_e = reqQuery.approve_e;
-    } else {
-      revElem.d_b = '';  // here where mongodb query get introduced.
+      revElem.date  = today.formatedDate('-'); // here needs history information; maybe introduce Mongodb in the future.
+    } else {  // from first to the last but one round of iteration.
+      revElem.d_b   = '';  // here needs history information; maybe introduce Mongodb in the future.
       revElem.d_b_e = '';
-      revElem.c_b = '';
+      revElem.c_b   = '';
       revElem.c_b_e = '';
-      revElem.r_b = '';
+      revElem.r_b   = '';
       revElem.r_b_e = '';
-      revElem.a_b = '';
+      revElem.a_b   = '';
       revElem.a_b_e = '';
+      revElem.date  = '';
     }
 
     if (i == 1) {
@@ -190,7 +202,7 @@ module.exports = function ( reqQuery ) {
   dataSet['i_s'] = reqQuery.index_short;
   dataSet['i_19'] = reqQuery.index_19;
   dataSet['pages'] = reqQuery.pages;
-  dataSet['date'] = today.formatedDate('-');
+  // dataSet['date'] = today.formatedDate('-');
 
   // splite index_19 into a list of each digit.
   var index_19 = reqQuery.index_19;
@@ -237,13 +249,17 @@ module.exports = function ( reqQuery ) {
                   'd_b':'', 'd_b_e':'',
                   'c_b':'', 'c_b_e':'',
                   'r_b':'', 'r_b_e':'',
-                  'a_b':'', 'a_b_e':'', 'observation':'' }
+                  'a_b':'', 'a_b_e':'',
+                  'observation':'' };
 
   var revRow = generateRevRow( reqQuery );
-  dataSet['r_r_1'] = autoExtRevRow(revRow, 3, revElem).slice(-3).reverse();  // for first page of cover
-  dataSet['r_r_2'] = autoExtRevRow(revRow.slice(0, -3), 12, revElem).slice(-16);
-  dataSet['r_r_3'] = autoExtRevRow(revRow, 7, revElem).slice(-7);
-  dataSet['r_r_4'] = autoExtRevRow(revRow, 17, revElem).slice(-18);
+
+  // for first page of cover
+  dataSet['r_r_1'] = autoExtRevRow(revRow, 3, revElem).slice(-3).reverse(); // first page of cover
+  // dataSet['r_r_2'] = autoExtRevRow(revRow.slice(0, -3), 12, revElem).slice(-16);
+  dataSet['r_r_3'] = autoExtRevRow(revRow, 3, revElem).slice(-3);  // second page of cover
+  dataSet['r_r_4'] = autoExtRevRow(revRow, 11, revElem).slice(-11); // third page of cover
+  // Ask myself: what is this 'r_leading' used for?
   dataSet['r_leading'] = revRow.slice(0, -3).pop() ?
                          revRow.slice(0, -3).pop()['r'].toUpperCase() : '';
 

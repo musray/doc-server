@@ -1,0 +1,11 @@
+﻿cin_check_list.xlsx
+generic_check_list.xlsx
+arrangement_check_list 安全级DCS(FirmSys)机柜安装图检查内容表.xls
+assemble_check_list    安全级DCS（FirmSys）装配接线表检查内容表.xls
+config_check_list      安全级DCS（FirmSys）算法组态检查内容表.xls
+fd_check_list          安全级DCS(FirmSys)功能图检查内容表.xls
+io_check_list          安全级DCS(FirmSys)详细IO清单检查内容表.xls
+layout_check_list      安全级DCS(FirmSys)机柜布置图检查内容表.xls
+setpoint_check_list    安全级DCS（FirmSys）设定值清单检查内容表.xls
+terminal_check_list    端子接线表检查内容表.xls
+wd_check_list          安全级DCS(FirmSys)接线图检查内容表.xls
