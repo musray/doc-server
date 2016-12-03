@@ -1,4 +1,4 @@
-var iedOptions = '<option value="arrangement">机柜安装图</option> <option value="assemble">装配接线表</option> <option value="config">算法组态</option> <option value="fd">功能图</option> <option value="io_list">IO List</option> <option value="layout">机柜布置图</option> <option value="setpoint">设定值清单</option> <option value="terminal">端子接线表</option> <option value="wd">接线图</option>';
+var iedOptions = ' <option value="arrangement">机柜安装图</option> <option value="assemble">装配接线表</option> <option value="config">算法组态</option> <option value="fd">功能图</option> <option value="io_list">IO List</option> <option value="layout">机柜布置图</option> <option value="setpoint">设定值清单</option> <option value="terminal">端子接线表</option> <option value="wd">接线图</option><option value="spec">系统设计文件(说明书)</option> ';
 
 var projectOptions = {
   'hyh56': '<option value="hyh-5">HYH-5</option> <option value="hyh-6">HYH-6</option> ',
