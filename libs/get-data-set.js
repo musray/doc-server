@@ -75,20 +75,20 @@ var observations = {
     'update': 'Update accroding to design progress'
   },
   'tw56': {
-    'init': 'First Issue',
-    'update': 'Update accroding to design progress'
+    'init': '出版发布',
+    'update': '升版'
   },
   'hyh56': {
-    'init': 'First Issue',
-    'update': 'Update accroding to design progress'
+    'init': '出版发布',
+    'update': '升版'
   },
   'yj56': {
-    'init': 'First Issue',
-    'update': 'Update accroding to design progress'
+    'init': '出版发布',
+    'update': '升版'
   },
   'fcg34': {
-    'init': 'First Issue',
-    'update': 'Update accroding to design progress'
+    'init': '出版发布',
+    'update': '升版'
   }
 };
 

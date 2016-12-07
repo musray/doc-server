@@ -1,0 +1,10 @@
+arrangement_cover : 机柜安装图
+assemble_cover    : 装配接线表
+config_cover      : 算法组态
+fd_cover          : 功能图
+io_cover          : 详细IO清单
+layout_cover      : 机置图
+setpoint_cover    : 设定值清单
+terminal_cover    : 端子接线表
+wd_cover          : 接线图
+spec_cover        : 说明书

@@ -12,17 +12,17 @@ module.exports = function ( docType, subDocType, project /*, iedRev*/ ) {
   var iedGenerator = function ( subDocType, project) {
 
     var iedCoverAndCheck = {
-      'cin'         : [ 'cin_cover.xlsx'            , 'cin_check_list.xlsx' ],         // CIN
+      // 'cin'         : [ 'cin_cover.xlsx'            , 'cin_check_list.xlsx' ],      // CIN
       'arrangement' : [ 'ied_cover_arrangement.docx', 'arrangement_check_list.xlsx' ], // 机柜安装图
-      'assemble'    : [ 'ied_cover_assemble.docx'   , 'assemble_check_list.xlsx' ],    // 装配接线表
-      'config'      : [ 'ied_cover_config.docx'     , 'config_check_list.xlsx' ],      // 算法组态
-      'fd'          : [ 'ied_cover_fd.docx'         , 'fd_check_list.xlsx' ],          // 功能图
-      'io_list'     : [ 'ied_cover_io.docx'         , 'io_check_list.xlsx' ],          // IO List
-      'layout'      : [ 'ied_cover_layout.docx'     , 'layout_check_list.xlsx' ],      // 机柜布置图
-      'setpoint'    : [ 'ied_cover_setpoint.docx'   , 'setpoint_check_list.xlsx' ],    // 设定值清单
-      'terminal'    : [ 'ied_cover_terminal.docx'   , 'terminal_check_list.xlsx' ],    // 端子接线表
-      'wd'          : [ 'ied_cover_wd.docx'         , 'wd_check_list.xlsx' ],          // 接线图
-      'spec'        : [ 'ied_cover_spec.docx'       , 'generic_check_list.xlsx' ]      // 说明书
+      'assemble'    : [ 'ied_cover_assemble.docx'   , 'assemble_check_list.xlsx'    ], // 装配接线表
+      'config'      : [ 'ied_cover_config.docx'     , 'config_check_list.xlsx'      ], // 算法组态
+      'fd'          : [ 'ied_cover_fd.docx'         , 'fd_check_list.xlsx'          ], // 功能图
+      'io_list'     : [ 'ied_cover_io.docx'         , 'io_check_list.xlsx'          ], // IO List
+      'layout'      : [ 'ied_cover_layout.docx'     , 'layout_check_list.xlsx'      ], // 机柜布置图
+      'setpoint'    : [ 'ied_cover_setpoint.docx'   , 'setpoint_check_list.xlsx'    ], // 设定值清单
+      'terminal'    : [ 'ied_cover_terminal.docx'   , 'terminal_check_list.xlsx'    ], // 端子接线表
+      'wd'          : [ 'ied_cover_wd.docx'         , 'wd_check_list.xlsx'          ], // 接线图
+      'spec'        : [ 'ied_cover_spec.docx'       , 'generic_check_list.xlsx'     ]  // 说明书
     };
     // var iedCheckLists = {
     //   'cin'         : 'cin_check_list.xlsx',         // CIN
