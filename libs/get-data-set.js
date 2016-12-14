@@ -196,7 +196,7 @@ module.exports = function ( reqQuery ) {
                    'site modification of' + ' ' +
                    reqQuery.cabinet;
   } else {
-    // title of documents other than CIN
+    // title of documents other than CI N
    dataSet['t'] = reqQuery.title;
   }
   dataSet['i_s'] = reqQuery.index_short;
@@ -213,11 +213,33 @@ module.exports = function ( reqQuery ) {
     }
   }
 
+  // splite index_19_ref into an array of every digit.
+  // Added on 2016-12-07
+  var index_19_ref = reqQuery.index_19_ref;
+  if ( reqQuery.index_19_ref.length === 19 ) {  // reference document
+    for ( let m = 0; m < reqQuery.index_19_ref.length; m++ ) {
+      let no_ref = 'ir' + m;  // 'no_ref': number of reference doc, 'ir': index of ref
+      dataSet[no_ref] = index_19_ref[m]
+    }
+    dataSet['ir_r'] = reqQuery.rev_ref;
+    dataSet['title_ref'] = reqQuery.title_ref;
+    dataSet['new'] = '';
+    dataSet['modified'] = 'X';
+  } else {                                    // reference document
+    for ( let m = 0; m < 19; m++ ) {
+      let no_ref = 'ir' + m;  // 'no_ref': number of reference doc, 'ir': index of ref
+      dataSet[no_ref] = '';
+    }
+    dataSet['ir_r'] = '';
+    dataSet['new'] = 'X';
+    dataSet['modified'] = '';
+  }
+
   // observation is applicable to CPR1000
   // TODO for other projetcs
   dataSet['observation'] =
-    reqQuery.rev == 'A' ? 'First issue'
-                         : 'Revised according to design progress';
+    reqQuery.rev == 'A' ? '初版发布'
+                         : '升版';
 
   // get EOMR index number
   dataSet['eomr'] = eomrIndex[reqQuery.unit];
