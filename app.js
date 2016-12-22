@@ -11,7 +11,6 @@ const fs = require('fs'),
       xlsxProcessor = require('./libs/xlsx-processor'),
       docxProcessor = require('./libs/docx-processor'),
       wagner = require('wagner-core'),
-      mongoose = require('mongoose'),
       getDataSet = require('./libs/get-data-set.js');
 
 // 1. Set up the Express application ========================
