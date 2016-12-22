@@ -1,29 +1,73 @@
-<!-- cinHTML --> 
+<!-- cinhtml -->
 
-<label for="unit">机组编号</label> 
+<label for="unit">机组编号</label>
 <select id="unit_selection" name="unit">
   <!-- options will be inserted by content-specify.js -->
 </select>
 <div id="project_info">
   <label for="site_stage">改造阶段</label>
   <select id="document_selection" name="site_stage">
-    <option value="">现场改造</option> 
-    <option value="periodical">大修</option> 
+    <option value="restore,复原">复原</option>
+    <option value="1st_sm,第1次现场改造">第1次现场改造</option>
+    <option value="2nd_sm,第2次现场改造">第2次现场改造</option>
+    <option value="3rd_sm,第3次现场改造">第3次现场改造</option>
+    <option value="4th_sm,第4次现场改造">第4次现场改造</option>
+    <option value="5th_sm,第5次现场改造">第5次现场改造</option>
+    <option value="6th_sm,第6次现场改造">第6次现场改造</option>
+    <option value="7th_sm,第7次现场改造">第7次现场改造</option>
+    <option value="1st_outage,第1次大修">第1次大修</option>
+    <option value="2nd_outage,第2次大修">第2次大修</option>
+    <option value="3rd_outage,第3次大修">第3次大修</option>
   </select>
-  <label for="number_of_times">改造次数</label>
-  <input type="text" name="number_of_times">(1st, 2nd, 3rd, 4.2th...)</input> 
+  <!-- <label for="number_of_times">改造次数</label>
+  <input type="text" name="number_of_times">(1st, 2nd, 3rd, 4.2th...)</input> -->
 </div>
 
 <div id="document_info">
-  <label for="cabinet">系统(例如RPC1-2, ESF-B)</label>
-  <input type="text" name="cabinet"> 
+
+  <label for="cabinet">选择系统</label>
+  <select name="cabinet">
+    <option value="RPC-I">RPC-I</option>
+    <option value="RPC-II">RPC-II</option>
+    <option value="RPC-III">RPC-III</option>
+    <option value="RPC-IV">RPC-IV</option>
+    <option value="ESFAC-A">ESFAC-A</option>
+    <option value="SRC-A1">SRC-A1</option>
+    <option value="SRC-A2">SRC-A2</option>
+    <option value="SRC-A3">SRC-A3</option>
+    <option value="SRC-A4">SRC-A4</option>
+    <option value="CCMS-A">CCMS-A</option>
+    <option value="DTC-A">DTC-A</option>
+    <option value="APC-A">APC-A</option>
+    <option value="P-GU-A">P-GU-A</option>
+    <option value="PDC-A">PDC-A</option>
+    <option value="ESFAC-B">ESFAC-B</option>
+    <option value="SRC-B1">SRC-B1</option>
+    <option value="SRC-B2">SRC-B2</option>
+    <option value="SRC-B3">SRC-B3</option>
+    <option value="SRC-B4">SRC-B4</option>
+    <option value="CCMS-B">CCMS-B</option>
+    <option value="DTC-B">DTC-B</option>
+    <option value="APC-B">APC-B</option>
+    <option value="P-GU-B">P-GU-B</option>
+    <option value="PDC-B">PDC-B</option>
+  </select>
+
+  <label for="qualification">质保等级</label></label>
+  <select class="" name="qualification">
+    <option value="q1"> Q1 </option>
+    <option value="q3"> Q3 </option>
+  </select>
+  <br>
+  <!-- <input type="text" name="cabinet"> -->
+
   <label for="rev">CIN版本</label>
   <select id="rev_selection" name="rev">
-    <option value="a">A</option> 
-    <option value="b">B</option> 
-    <option value="c">C</option> 
+    <option value="a">A</option>
+    <option value="b">B</option>
+    <option value="c">C</option>
   </select>
-  <label for="pages">总页数</label>
+  <label for="pages">总页数(包含首页)</label>
   <input type="text" name="pages">
   <div id="signature">
     <label for="draft">设计人</label>
@@ -37,9 +81,9 @@
   </div>
   <div id="signature_e">
     <label for="draft_e">draft</label>
-    <input type="text" name="draft_e">
+    <input type="text" name="draft_e" id="draft_by_e">
     <label for="check_e">check</label>
-    <input type="text" name="check_e">
+    <input type="text" name="check_e" id="check_by_e">
     <label for="review_e">review</label>
     <input type="text" name="review_e" id="review_by_e">
     <label for="approve_e">approve</label>
@@ -48,5 +92,5 @@
 </div>
 
 
-<!-- cinHTML.min --> 
-<label for="unit">机组编号</label> <select id="unit_selection" name="unit"> <!-- options will be inserted by content-specify.js --> </select> <div id="project_info"> <label for="site_stage">改造阶段</label> <select id="document_selection" name="site_stage"> <option value="">现场改造</option> <option value="periodical">大修</option> </select> <label for="number_of_times">改造次数</label> <input type="text" name="number_of_times">(1st, 2nd, 3rd, 4.2th...)</input> </div> <div id="document_info"> <label for="cabinet">系统(例如RPC1-2, ESF-B)</label> <input type="text" name="cabinet"> <label for="rev">CIN版本</label> <select id="rev_selection" name="rev"> <option value="a">A</option> <option value="b">B</option> <option value="c">C</option> </select> <label for="pages">总页数</label> <input type="text" name="pages"> <div id="signature"> <label for="draft">设计人</label> <input type="text" name="draft"> <label for="check">互查人</label> <input type="text" name="check"> <label for="review">审核人</label> <input type="text" name="review" id="review_by"> <label for="approve">批准人</label> <input type="text" name="approve" id="approve_by"> </div> <div id="signature_e"> <label for="draft_e">draft</label> <input type="text" name="draft_e"> <label for="check_e">check</label> <input type="text" name="check_e"> <label for="review_e">review</label> <input type="text" name="review_e" id="review_by_e"> <label for="approve_e">approve</label> <input type="text" name="approve_e" id="approve_by_e"> </div> </div>
+<!-- cinHTML.min -->
+<label for="unit">机组编号</label> <select id="unit_selection" name="unit"> <!-- options will be inserted by content-specify.js --> </select> <div id="project_info"> <label for="site_stage">改造阶段</label> <select id="document_selection" name="site_stage"> <option value="restore,复原">复原</option> <option value="1st_sm,第1次现场改造">第1次现场改造</option> <option value="2nd_sm,第2次现场改造">第2次现场改造</option> <option value="3rd_sm,第3次现场改造">第3次现场改造</option> <option value="4th_sm,第4次现场改造">第4次现场改造</option> <option value="5th_sm,第5次现场改造">第5次现场改造</option> <option value="6th_sm,第6次现场改造">第6次现场改造</option> <option value="7th_sm,第7次现场改造">第7次现场改造</option> <option value="1st_outage,第1次大修">第1次大修</option> <option value="2nd_outage,第2次大修">第2次大修</option> <option value="3rd_outage,第3次大修">第3次大修</option> </select> <!-- <label for="number_of_times">改造次数</label> <input type="text" name="number_of_times">(1st, 2nd, 3rd, 4.2th...)</input> --> </div> <div id="document_info"> <label for="cabinet">选择系统</label> <select name="cabinet"> <option value="RPC-I">RPC-I</option> <option value="RPC-II">RPC-II</option> <option value="RPC-III">RPC-III</option> <option value="RPC-IV">RPC-IV</option> <option value="ESFAC-A">ESFAC-A</option> <option value="SRC-A1">SRC-A1</option> <option value="SRC-A2">SRC-A2</option> <option value="SRC-A3">SRC-A3</option> <option value="SRC-A4">SRC-A4</option> <option value="CCMS-A">CCMS-A</option> <option value="DTC-A">DTC-A</option> <option value="APC-A">APC-A</option> <option value="P-GU-A">P-GU-A</option> <option value="PDC-A">PDC-A</option> <option value="ESFAC-B">ESFAC-B</option> <option value="SRC-B1">SRC-B1</option> <option value="SRC-B2">SRC-B2</option> <option value="SRC-B3">SRC-B3</option> <option value="SRC-B4">SRC-B4</option> <option value="CCMS-B">CCMS-B</option> <option value="DTC-B">DTC-B</option> <option value="APC-B">APC-B</option> <option value="P-GU-B">P-GU-B</option> <option value="PDC-B">PDC-B</option> </select> <label for="qualification">质保等级</label></label> <select class="" name="qualification"> <option value="q1"> Q1 </option> <option value="q3"> Q3 </option> </select> <br> <!-- <input type="text" name="cabinet"> --> <label for="rev">CIN版本</label> <select id="rev_selection" name="rev"> <option value="a">A</option> <option value="b">B</option> <option value="c">C</option> </select> <label for="pages">总页数(包含首页)</label> <input type="text" name="pages"> <div id="signature"> <label for="draft">设计人</label> <input type="text" name="draft"> <label for="check">互查人</label> <input type="text" name="check"> <label for="review">审核人</label> <input type="text" name="review" id="review_by"> <label for="approve">批准人</label> <input type="text" name="approve" id="approve_by"> </div> <div id="signature_e"> <label for="draft_e">draft</label> <input type="text" name="draft_e" id="draft_by_e"> <label for="check_e">check</label> <input type="text" name="check_e" id="check_by_e"> <label for="review_e">review</label> <input type="text" name="review_e" id="review_by_e"> <label for="approve_e">approve</label> <input type="text" name="approve_e" id="approve_by_e"> </div> </div>
